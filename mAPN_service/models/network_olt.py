@@ -1,4 +1,5 @@
 import sqlalchemy as sa
+from datetime import datetime
 from mAPN_service.models import Base
 
 
@@ -10,7 +11,7 @@ class Network_Olt(Base):
     id = sa.Column(sa.Integer, primary_key=True)
     vendor = sa.Column(sa.String(255))
     model = sa.Column(sa.String(32))
-    create_time = sa.Column(sa.String(45))
+    create_time = sa.Column(sa.DateTime, default=datetime.utcnow())
     network_oltcol = sa.Column(sa.String(45))
     ip_address = sa.Column(sa.String(45))
     ssh_port = sa.Column(sa.String(45))
@@ -18,9 +19,8 @@ class Network_Olt(Base):
     ssh_password = sa.Column(sa.String(45))
     uplink_board = sa.Column(sa.String(45))
     uplink_interface = sa.Column(sa.String(45))
-    network_oltcol1 = sa.Column(sa.String(45))
-    network_router_id = sa.Column(sa.Integer())
-    network_router_partner_location_id = sa.Column(sa.Integer())
+    network_router_id = sa.Column(sa.Integer)
+    network_router_partner_location_id = sa.Column(sa.Integer)
 
     def __init__(self,
             id=None,

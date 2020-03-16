@@ -9,19 +9,20 @@ class Traffic_Plan(Base):
 
     id = sa.Column(sa.Integer, primary_key=True)
     traffic_plan_name = sa.Column(sa.String(45))
-    desc = sa.Column(sa.Text())
+    desc = sa.Column(sa.Text)
     traffic_plancol = sa.Column(sa.String(45))
-    partner_location = sa.Column(sa.Integer())
-    download_speed = sa.Column(sa.Integer())
-    upload_speed = sa.Column(sa.Integer())
-    guaranteed_speed_limit = sa.Column(sa.Integer())
+    # ref key from `partner_locations` table.
+    partner_location = sa.Column(sa.Integer)
+    download_speed = sa.Column(sa.Float)
+    upload_speed = sa.Column(sa.Float)
+    guaranteed_speed_limit = sa.Column(sa.Float)
     qos_priority = sa.Column(sa.String(45))
-    aggregation = sa.Column(sa.Integer())
-    burst_limit = sa.Column(sa.Integer())
-    burst_threshold = sa.Column(sa.Integer())
+    aggregation = sa.Column(sa.Float)
+    burst_limit = sa.Column(sa.Float)
+    burst_threshold = sa.Column(sa.Float)
     burst_time = sa.Column(sa.String(45))
-    service_plan_id = sa.Column(sa.Integer())
-    service_plan_customer_id = sa.Column(sa.Integer())
+    service_plan_id = sa.Column(sa.Integer)
+    service_plan_customer_id = sa.Column(sa.Integer)
 
     def __init__(self,
             id=None,

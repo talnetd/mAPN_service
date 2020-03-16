@@ -1,4 +1,5 @@
 import sqlalchemy as sa
+from datetime import datetime
 from mAPN_service.models import Base
 
 
@@ -13,12 +14,12 @@ class Customer(Base):
     password = sa.Column(sa.String(32))
     full_name = sa.Column(sa.String(45))
     phone = sa.Column(sa.String(45))
-    date_of_birth = sa.Column(sa.String(45))
+    date_of_birth = sa.Column(sa.DateTime)
     active_status = sa.Column(sa.String(45))
     type_of_billing = sa.Column(sa.String(45))
     customer_category = sa.Column(sa.String(45))
     customer_location = sa.Column(sa.String(45))
-    date_added = sa.Column(sa.String(45))
+    date_added = sa.Column(sa.DateTime, default=datetime.utcnow())
     geo_data = sa.Column(sa.String(45))
     gpon_ont = sa.Column(sa.String(45))
     partner_isp_id = sa.Column(sa.String(45))

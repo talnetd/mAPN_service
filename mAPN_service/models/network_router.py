@@ -19,7 +19,7 @@ class Network_Router(Base):
     enable_api = sa.Column(sa.String(45))
     login = sa.Column(sa.String(45))
     username = sa.Column(sa.String(45))
-    partner_locations_id = sa.Column(sa.Integer())
+    partner_locations_id = sa.Column(sa.Integer)
 
     def __init__(self,
             id=None,

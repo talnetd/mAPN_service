@@ -1,4 +1,5 @@
 import sqlalchemy as sa
+from datetime import datetime
 from sqlalchemy.schema import FetchedValue
 from mAPN_service.models import Base
 
@@ -12,8 +13,8 @@ class Service_Plan(Base):
     plan_name = sa.Column(sa.String(16), nullable=False)
     desc = sa.Column(sa.String(255)),
     pricing = sa.Column(sa.String(32), nullable=False)
-    pay_method = sa.Column(sa.TIMESTAMP, server_default=FetchedValue())
-    end_date = sa.Column(sa.String(45))
+    pay_method = sa.Column(sa.String(32))
+    end_date = sa.Column(sa.DateTime, default=datetime.utcnow())
     discount = sa.Column(sa.String(45))
     customer_id = sa.Column(sa.Integer)
 

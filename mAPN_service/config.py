@@ -5,6 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy_continuum import make_versioned
 from mAPN_service.models import Base
+from mAPN_service.models.boards import Boards
 from mAPN_service.models.customer import Customer
 from mAPN_service.models.network_olt import Network_Olt
 from mAPN_service.models.network_router import Network_Router
@@ -24,6 +25,7 @@ DB_URI = f'mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}
 make_versioned(user_cls=None)
 engine = create_engine(DB_URI)
 Base.metadata.create_all(engine, tables=[
+    Boards.__table__,
     Customer.__table__,
     Network_Olt.__table__,
     Network_Router.__table__,
