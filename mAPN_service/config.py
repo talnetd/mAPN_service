@@ -9,7 +9,7 @@ from mAPN_service.models.customer import Customer
 from mAPN_service.models.network_olt import Network_Olt
 from mAPN_service.models.network_router import Network_Router
 from mAPN_service.models.partner_locations import Partner_Locations
-# from mAPN_service.models.service_plan import Service_Plan
+from mAPN_service.models.service_plan import Service_Plan
 from mAPN_service.models.traffic_plan import Traffic_Plan
 
 
@@ -28,7 +28,7 @@ Base.metadata.create_all(engine, tables=[
     Network_Olt.__table__,
     Network_Router.__table__,
     Partner_Locations.__table__,
-    # Service_Plan.__table__,
+    Service_Plan.__table__,
     Traffic_Plan.__table__
 ])
 Session = sessionmaker(bind=engine)
