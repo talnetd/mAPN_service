@@ -1,0 +1,11 @@
+title: traffic_plan
+type: object
+x-tags:
+  - network
+properties:
+  id:
+    type: integer
+  traffic_plan_name:
+    type: string
+  '':
+    type: string
