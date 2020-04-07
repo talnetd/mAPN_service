@@ -13,17 +13,56 @@ paths:
       tags: []
       responses: {}
       operationId: get-customer-create
+      security:
+        - API-Token: []
     post:
       summary: ''
       operationId: post-customer-create
       responses:
         '200':
           description: OK
+      parameters: []
+      description: ''
 components:
   schemas:
     customer:
       title: customer
       type: object
+      properties:
+        splitter_port_no:
+          type: string
+        partner_isp_id:
+          type: string
+        gpon_ont:
+          type: string
+        geo_data:
+          type: string
+        date_added:
+          type: string
+        customer_category:
+          type: string
+        type_of_billing:
+          type: string
+        active_status:
+          type: string
+        date_of_birth:
+          type: string
+        phone:
+          type: string
+        full_name:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+          description: "customer's email eg: me@tinaunglin.com"
+        username:
+          type: string
+          description: 'username assigned by BMS eg. "P200110"'
+        bms_id:
+          type: integer
+          description: id gerneated by BMS
+      description: CUSTOMER API MODEL
       x-examples:
         example-1:
           id: 1
@@ -38,38 +77,9 @@ components:
           customer_category: F20M
           customer_location: 'No-110,38(A),Mayangone Township, Pyay Road, Yangon'
           date_added: 18/01/2020
-      description: CUSTOMER API MODEL
-      properties:
-        bms_id:
-          type: integer
-          description: id gerneated by BMS
-        username:
-          type: string
-          description: 'username assigned by BMS eg. "P200110"'
-        email:
-          type: string
-          description: "customer's email eg: me@tinaunglin.com"
-        password:
-          type: string
-        full_name:
-          type: string
-        phone:
-          type: string
-        date_of_birth:
-          type: string
-        active_status:
-          type: string
-        type_of_billing:
-          type: string
-        customer_category:
-          type: string
-        date_added:
-          type: string
-        geo_data:
-          type: string
-        gpon_ont:
-          type: string
-        partner_isp_id:
-          type: string
-        splitter_port_no:
-          type: string
+  securitySchemes:
+    API-Token:
+      type: http
+      scheme: bearer
+security:
+  - undefined: []
