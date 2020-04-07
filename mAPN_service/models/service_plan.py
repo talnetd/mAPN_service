@@ -11,7 +11,7 @@ class Service_Plan(Base):
 
     id = sa.Column(sa.Integer, primary_key=True)
     plan_name = sa.Column(sa.String(16), nullable=False)
-    desc = sa.Column(sa.String(255)),
+    description = sa.Column(sa.String(255))
     pricing = sa.Column(sa.String(32), nullable=False)
     pay_method = sa.Column(sa.String(32))
     end_date = sa.Column(sa.DateTime, default=datetime.utcnow())
@@ -21,7 +21,7 @@ class Service_Plan(Base):
     def __init__(self,
             id=None,
             plan_name=None,
-            desc=None,
+            description=None,
             pricing=None,
             pay_method=None,
             end_date=None,
@@ -29,7 +29,7 @@ class Service_Plan(Base):
             customer_id=None):
         self.id = id
         self.plan_name = plan_name
-        self.desc = desc
+        self.description = description
         self.pricing = pricing
         self.pay_method = pay_method
         self.end_date = end_date
