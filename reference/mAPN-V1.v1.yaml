@@ -1,0 +1,29 @@
+openapi: 3.0.0
+info:
+  title: mAPN-V1
+  version: '1.0'
+  description: Simple API to talk with BMS and operate underlying networks
+servers:
+  - url: 'http://localhost:5000'
+    description: LOCALHOST
+paths:
+  /customer/create:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-customer-create
+    post:
+      summary: ''
+      operationId: post-customer-create
+      responses:
+        '200':
+          description: OK
+components:
+  schemas:
+    customer:
+      title: customer
+      type: object
+      properties:
+        id:
+          type: string
