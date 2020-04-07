@@ -10,8 +10,10 @@ paths:
   /customers/create:
     get:
       summary: Your GET endpoint
-      tags: []
-      responses: {}
+      tags: ['Customer']
+      responses:
+        '204':
+          description: 'Saved successfully.'
       operationId: get-customers-create
       security:
         - API-Token: []
@@ -30,7 +32,9 @@ paths:
     get:
       summary: Your GET endpoint
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: Get customer list
       operationId: get-customers
       security:
         - API-Token: []
@@ -46,7 +50,9 @@ paths:
     get:
       summary: Your GET endpoint
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: Get customer info by ID
       operationId: get-customers-customerid
       security:
         - API-Token: []
