@@ -23,6 +23,8 @@ paths:
           description: OK
       parameters: []
       description: ''
+      security:
+        - API-Token: []
     parameters: []
   /customers:
     get:
@@ -30,6 +32,10 @@ paths:
       tags: []
       responses: {}
       operationId: get-customers
+      security:
+        - API-Token: []
+      parameters: []
+      description: ''
   '/customers/{customerid}':
     parameters:
       - schema:
@@ -42,6 +48,8 @@ paths:
       tags: []
       responses: {}
       operationId: get-customers-customerid
+      security:
+        - API-Token: []
 components:
   schemas:
     customer:
@@ -100,5 +108,6 @@ components:
     API-Token:
       type: http
       scheme: bearer
+      description: ''
 security:
   - undefined: []
