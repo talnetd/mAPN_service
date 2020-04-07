@@ -7,12 +7,12 @@ servers:
   - url: 'http://localhost:5000'
     description: LOCALHOST
 paths:
-  /customer/create:
+  /customers/create:
     get:
       summary: Your GET endpoint
       tags: []
       responses: {}
-      operationId: get-customer-create
+      operationId: get-customers-create
       security:
         - API-Token: []
     post:
@@ -23,6 +23,25 @@ paths:
           description: OK
       parameters: []
       description: ''
+    parameters: []
+  /customers:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-customers
+  '/customers/{customerid}':
+    parameters:
+      - schema:
+          type: string
+        name: customerid
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-customers-customerid
 components:
   schemas:
     customer:
