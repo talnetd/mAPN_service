@@ -7,5 +7,32 @@ properties:
     type: integer
   traffic_plan_name:
     type: string
-  '':
+  desc:
     type: string
+  traffic_plancol:
+    type: string
+  partner_location:
+    type: integer
+  download_speed:
+    type: string
+  upload_speed:
+    type: string
+  guaranteed_speed_limit:
+    type: string
+  qos_priority:
+    type: string
+  aggregation:
+    type: string
+  burst_limit:
+    type: string
+  burst_threshold:
+    type: string
+  burst_time:
+    type: string
+  service_plan_id:
+    type: integer
+  service_plan_customer_id:
+    type: integer
+x-examples:
+  example-1: {}
+description: Traffic Plan API Model.
