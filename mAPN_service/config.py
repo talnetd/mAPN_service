@@ -7,9 +7,10 @@ from sqlalchemy_continuum import make_versioned
 from mAPN_service.models import Base
 from mAPN_service.models.boards import Boards
 from mAPN_service.models.customer import Customer
+from mAPN_service.models.location import Location
 from mAPN_service.models.network_olt import Network_Olt
 from mAPN_service.models.network_router import Network_Router
-from mAPN_service.models.partner_locations import Partner_Locations
+from mAPN_service.models.partner import Partner
 from mAPN_service.models.service_plan import Service_Plan
 from mAPN_service.models.traffic_plan import Traffic_Plan
 
@@ -27,9 +28,10 @@ engine = create_engine(DB_URI)
 Base.metadata.create_all(engine, tables=[
     Boards.__table__,
     Customer.__table__,
+    Location.__table__,
     Network_Olt.__table__,
     Network_Router.__table__,
-    Partner_Locations.__table__,
+    Partner.__table__,
     Service_Plan.__table__,
     Traffic_Plan.__table__
 ])

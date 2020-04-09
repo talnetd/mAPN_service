@@ -1,0 +1,119 @@
+openapi: 3.0.0
+info:
+  title: mAPN-V1
+  version: '1.0'
+  description: Simple API to talk with BMS and operate underlying networks
+servers:
+  - url: 'http://localhost:5000'
+    description: LOCALHOST
+paths:
+  /customers/create:
+    get:
+      summary: Your GET endpoint
+      tags: ['Customer']
+      responses:
+        '204':
+          description: 'Saved successfully.'
+      operationId: get-customers-create
+      security:
+        - API-Token: []
+    post:
+      summary: ''
+      operationId: post-customer-create
+      responses:
+        '200':
+          description: OK
+      parameters: []
+      description: ''
+      security:
+        - API-Token: []
+    parameters: []
+  /customers:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: Get customer list
+      operationId: get-customers
+      security:
+        - API-Token: []
+      parameters: []
+      description: ''
+  '/customers/{customerid}':
+    parameters:
+      - schema:
+          type: string
+        name: customerid
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: Get customer info by ID
+      operationId: get-customers-customerid
+      security:
+        - API-Token: []
+components:
+  schemas:
+    customer:
+      title: customer
+      type: object
+      properties:
+        splitter_port_no:
+          type: string
+        partner_isp_id:
+          type: string
+        gpon_ont:
+          type: string
+        geo_data:
+          type: string
+        date_added:
+          type: string
+        customer_category:
+          type: string
+        type_of_billing:
+          type: string
+        active_status:
+          type: string
+        date_of_birth:
+          type: string
+        phone:
+          type: string
+        full_name:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+          description: "customer's email eg: me@tinaunglin.com"
+        username:
+          type: string
+          description: 'username assigned by BMS eg. "P200110"'
+        bms_id:
+          type: integer
+          description: id gerneated by BMS
+      description: CUSTOMER API MODEL
+      x-examples:
+        example-1:
+          id: 1
+          username: P200110
+          email: me@tinaunglin.com
+          password: x9d81223901djkneadadfoek
+          full_name: Dr.Mg Mg
+          phone: 9427412047
+          date_of_birth: 17/08/1991
+          active_status: active
+          type_of_billing: monthly
+          customer_category: F20M
+          customer_location: 'No-110,38(A),Mayangone Township, Pyay Road, Yangon'
+          date_added: 18/01/2020
+  securitySchemes:
+    API-Token:
+      type: http
+      scheme: bearer
+      description: ''
+security:
+  - undefined: []

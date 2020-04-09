@@ -1,0 +1,30 @@
+title: network_olt
+type: object
+description: OLT API MODEL
+properties:
+  id:
+    type: integer
+  vendor:
+    type: string
+  model:
+    type: string
+  create_time:
+    type: string
+  network_oltcol:
+    type: string
+  ip_address:
+    type: string
+  ssh_port:
+    type: string
+  ssh_user:
+    type: string
+  ssh_password:
+    type: string
+  uplink_board:
+    type: string
+  uplink_interface:
+    type: string
+  network_router_id:
+    type: integer
+  network_router_partner_location_id:
+    type: integer
