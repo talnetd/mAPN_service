@@ -11,8 +11,9 @@ from mAPN_service.models.location import Location
 from mAPN_service.models.network_olt import Network_Olt
 from mAPN_service.models.network_router import Network_Router
 from mAPN_service.models.partner import Partner
-from mAPN_service.models.service_plan import Service_Plan
-from mAPN_service.models.traffic_plan import Traffic_Plan
+from mAPN_service.models.internet_traffic_plan import InternetTrafficPlan
+from mAPN_service.models.voip_traffic_plan import VoipTrafficPlan
+from mAPN_service.models.custom_traffic_plan import CustomTrafficPlan
 
 
 DB_HOST = os.environ.get('DB_HOST', 'localhost')
@@ -32,8 +33,9 @@ Base.metadata.create_all(engine, tables=[
     Network_Olt.__table__,
     Network_Router.__table__,
     Partner.__table__,
-    Service_Plan.__table__,
-    Traffic_Plan.__table__
+    InternetTrafficPlan.__table__,
+    VoipTrafficPlan.__table__,
+    CustomTrafficPlan.__table__
 ])
 Session = sessionmaker(bind=engine)
 
