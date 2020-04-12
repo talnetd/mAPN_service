@@ -1,28 +1,28 @@
 from flask import Blueprint, request
 from mAPN_service.config import session_scope
-from mAPN_service.models.partner import Partner
+from mAPN_service.models.network_olt import  Network_Olt
 from mAPN_service.modules import row2dict
 
 
-blueprint_partners = Blueprint('partners', __name__)
+blueprint_olts = Blueprint('network_olts', __name__)
 
 
 def show_all():
-    return 'All Partners'
+    return 'All OLTs'
 
 
 def create():
 
     with session_scope() as db:
-        partner = Partner(**request.form)
-        db.add(partner)
+        olt = Network_Olt(**request.form)
+        db.add(olt)
         db.flush()
-        db.refresh(partner)
-        data = row2dict(partner)
+        db.refresh(olt)
+        data = row2dict(olt)
         return data
 
 
-@blueprint_partners.route('/', methods=['GET', 'POST'])
+@blueprint_olts.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'GET':
         return show_all()
