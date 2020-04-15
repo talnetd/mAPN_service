@@ -12,7 +12,6 @@ class Network_Olt(Base):
     vendor = sa.Column(sa.String(255))
     model = sa.Column(sa.String(32))
     create_time = sa.Column(sa.DateTime, default=datetime.utcnow())
-    network_oltcol = sa.Column(sa.String(45))
     ip_address = sa.Column(sa.String(45))
     ssh_port = sa.Column(sa.String(45))
     ssh_user = sa.Column(sa.String(45))
@@ -21,6 +20,9 @@ class Network_Olt(Base):
     uplink_interface = sa.Column(sa.String(45))
     network_router_id = sa.Column(sa.Integer)
     network_router_partner_location_id = sa.Column(sa.Integer)
+    created_at = sa.Column(sa.DateTime, default=datetime.now)
+    updated_at = sa.Column(sa.DateTime, onupdate=datetime.now)
+    deleted_at = sa.Column(sa.DateTime)
 
     def __init__(self,
             id=None,

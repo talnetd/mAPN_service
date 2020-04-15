@@ -11,7 +11,7 @@ class VoipTrafficPlan(Base):
     id = sa.Column(sa.Integer, primary_key=True)
     title = sa.Column(sa.String(191), nullable=False)
     service_name = sa.Column(sa.String(191))
-    price = sa.Column(sa.Float(), nullable=False)
+    price = sa.Column(sa.Float, nullable=False)
     created_at = sa.Column(sa.DateTime, default=datetime.now)
     updated_at = sa.Column(sa.DateTime, onupdate=datetime.now)
     deleted_at = sa.Column(sa.DateTime)
