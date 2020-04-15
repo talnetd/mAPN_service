@@ -20,6 +20,9 @@ class Network_Router(Base):
     login = sa.Column(sa.String(45))
     username = sa.Column(sa.String(45))
     partner_locations_id = sa.Column(sa.Integer)
+    created_at = sa.Column(sa.DateTime, default=datetime.now)
+    updated_at = sa.Column(sa.DateTime, onupdate=datetime.now)
+    deleted_at = sa.Column(sa.DateTime)
 
     def __init__(self,
             id=None,

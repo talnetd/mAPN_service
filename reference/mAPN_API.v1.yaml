@@ -1,0 +1,541 @@
+openapi: 3.0.0
+info:
+  title: mAPN_API
+  version: '1.0'
+  contact:
+    name: mAPN Devs
+  description: Myanmar APN middleware APIs
+servers:
+  - url: 'http://localhost:5000'
+paths:
+  /customers:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Customer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+      operationId: get-customers
+      description: Get all customers
+      parameters: []
+      security:
+        - api_key_jwt: []
+    post:
+      summary: ''
+      operationId: post-customers
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: integer
+                description: Customer ID
+              examples: {}
+      description: Create a new Customer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+        description: Customer information
+      tags:
+        - Customer
+      security:
+        - api_key_jwt: []
+  /boards:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Device
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Board'
+      operationId: get-boards
+      description: Get all boards (which boards Ko TAL)
+      security:
+        - api_key_jwt: []
+    post:
+      summary: ''
+      operationId: post-boards
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: integer
+      description: Create a new board
+      security:
+        - api_key_jwt: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Board'
+      tags:
+        - Device
+  /locations:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Location
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Location'
+      operationId: get-locations
+      description: Get all locations
+      security:
+        - api_key_jwt: []
+    post:
+      summary: ''
+      operationId: post-locations
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: integer
+      description: Creat a new location
+      security:
+        - api_key_jwt: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location'
+      tags:
+        - Location
+  /custom_traffic_plan:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Traffic Plans
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomTrafficPlan'
+      operationId: get-custom_traffic_plan
+      description: Get all custom traffic plans.
+      security:
+        - api_key_jwt: []
+    post:
+      summary: ''
+      operationId: post-custom_traffic_plan
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: integer
+      description: Create a new custom traffic plan.
+      security:
+        - api_key_jwt: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomTrafficPlan'
+        description: ''
+      tags:
+        - Traffic Plans
+  /internet_traffic_plan:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Traffic Plans
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InternetTrafficPlan'
+      operationId: get-internet_traffic_plan
+      description: Get all internet traffic plans.
+      security:
+        - api_key_jwt: []
+    post:
+      summary: ''
+      operationId: post-internet_traffic_plan
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: integer
+      security:
+        - api_key_jwt: []
+      description: Create a new internet traffic plan.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InternetTrafficPlan'
+      tags:
+        - Traffic Plans
+  /olts:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Device
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NetworkOLT'
+      operationId: get-olts
+      description: Get all OLT devices.
+      security:
+        - api_key_jwt: []
+    post:
+      summary: ''
+      operationId: post-olts
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: integer
+      description: Create a new OLT device.
+      security:
+        - api_key_jwt: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NetworkOLT'
+      tags:
+        - Device
+  /routers:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Device
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NetworkRouters'
+      operationId: get-routers
+      description: Get all Routers.
+      security:
+        - api_key_jwt: []
+    post:
+      summary: ''
+      operationId: post-routers
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: integer
+      description: Creat a new router device.
+      security:
+        - api_key_jwt: []
+      tags:
+        - Device
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NetworkRouters'
+  /partners:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Partner
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Partner'
+      operationId: get-partners
+      description: Get all partner list.
+      security:
+        - api_key_jwt: []
+    post:
+      summary: ''
+      operationId: post-partners
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: integer
+      description: Create a new partner information.
+      security:
+        - api_key_jwt: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Partner'
+        description: ''
+      tags:
+        - Partner
+  /voip_traffic_plan:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Traffic Plans
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VoipTrafficPlan'
+      operationId: get-voip_traffic_plan
+      description: Get all VoIP traffic plans.
+      security:
+        - api_key_jwt: []
+    post:
+      summary: ''
+      operationId: post-voip_traffic_plan
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: integer
+      tags:
+        - Traffic Plans
+      description: Create a new VoIP traffic plan.
+      security:
+        - api_key_jwt: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VoipTrafficPlan'
+        description: ''
+components:
+  schemas:
+    Customer:
+      title: Customer
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        full_name:
+          type: string
+        phone:
+          type: string
+        date_of_birth:
+          type: string
+        active_status:
+          type: string
+        type_of_billing:
+          type: string
+        customer_category:
+          type: string
+        customer_location:
+          type: string
+        date_added:
+          type: string
+        geo_data:
+          type: string
+        gpon_ont:
+          type: string
+        partner_isp_id:
+          type: string
+        splitter_port_no:
+          type: string
+      x-examples: {}
+    Board:
+      title: Board
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        port_count:
+          type: integer
+    Location:
+      title: Location
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    CustomTrafficPlan:
+      title: CustomTrafficPlan
+      type: object
+      properties:
+        id:
+          type: integer
+        bandwidth:
+          type: integer
+        price:
+          type: number
+        service_name:
+          type: string
+        title:
+          type: string
+    InternetTrafficPlan:
+      title: InternetTrafficPlan
+      type: object
+      properties:
+        id:
+          type: integer
+        price:
+          type: number
+        upload_speed:
+          type: integer
+        download_speed:
+          type: integer
+        service_name:
+          type: string
+        title:
+          type: string
+    NetworkOLT:
+      title: NetworkOLT
+      type: object
+      properties:
+        id:
+          type: integer
+        network_router_partner_location_id:
+          type: integer
+        network_router_id:
+          type: integer
+        uplink_interface:
+          type: string
+        uplink_board:
+          type: string
+        ssh_password:
+          type: string
+        ssh_user:
+          type: string
+        ssh_port:
+          type: string
+        ip_address:
+          type: string
+        create_time:
+          type: string
+        model:
+          type: string
+        vendor:
+          type: string
+    NetworkRouters:
+      title: NetworkRouters
+      type: object
+      properties:
+        id:
+          type: integer
+        partner_locations_id:
+          type: integer
+        username:
+          type: string
+        login:
+          type: string
+        enable_api:
+          type: string
+        radius_secret:
+          type: string
+        authorization_accounting_type:
+          type: string
+        nas_address:
+          type: string
+        host_address:
+          type: string
+        physical_address:
+          type: string
+        vendor_model:
+          type: string
+        nas_type:
+          type: string
+        name:
+          type: string
+    Partner:
+      title: Partner
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    VoipTrafficPlan:
+      title: VoipTrafficPlan
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        service_name:
+          type: string
+        price:
+          type: number
+  securitySchemes:
+    api_key_jwt:
+      type: http
+      scheme: bearer
+security:
+  - api_key_jwt: []
+tags:
+  - name: Customer
+    description: Customer APIs
+  - name: Device
+    description: Device APIs
+  - name: Location
+    description: Location APIs
+  - name: Partner
+    description: Partner APIs
+  - name: Traffic Plans
+    description: Traffic Plan APIs
