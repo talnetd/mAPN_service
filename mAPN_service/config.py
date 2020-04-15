@@ -26,7 +26,7 @@ DB_URI = f'mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}
 
 make_versioned(user_cls=None)
 engine = create_engine(DB_URI)
-Base.metadata.create_all(engine, tables=[
+tables = [
     Boards.__table__,
     Customer.__table__,
     Location.__table__,
@@ -36,7 +36,8 @@ Base.metadata.create_all(engine, tables=[
     InternetTrafficPlan.__table__,
     VoipTrafficPlan.__table__,
     CustomTrafficPlan.__table__
-])
+]
+Base.metadata.create_all(engine, tables=tables)
 Session = sessionmaker(bind=engine)
 
 
