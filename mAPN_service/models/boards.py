@@ -7,11 +7,14 @@ from mAPN_service.models import Base
 class Boards(Base):
 
     __versioned__ = {}
-    __tablename__ = 'boards'
+    __tablename__ = 'board'
 
     id = sa.Column(sa.Integer, primary_key=True)
     name = sa.Column(sa.String(255), nullable=False)
     port_count = sa.Column(sa.Integer)
+    created_at = sa.Column(sa.DateTime, default=datetime.now)
+    updated_at = sa.Column(sa.DateTime, onupdate=datetime.now)
+    deleted_at = sa.Column(sa.DateTime)
 
     def __init__(self,
         id=None,

@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from mAPN_service.config import session_scope
 from mAPN_service.models.location import Location
 from mAPN_service.modules import row2dict
@@ -7,23 +7,42 @@ from mAPN_service.modules import row2dict
 blueprint_locations = Blueprint('locations', __name__)
 
 
-def show_all():
-    return 'All Locations'
+def get_locations():
+    locations = list()
+    with session_scope() as db:
+        found = db.query(Location).all()
+        locations = [row2dict(row) for row in found]
+    return locations
 
 
-def create():
+def create() -> int:
+    data = -1
     with session_scope() as db:
         location = Location(**request.form)
         db.add(location)
         db.flush()
         db.refresh(location)
-        data = row2dict(location)
-        return data
+        data = location.id
+    return data
+
+
+def get_locations_id(location_id) -> dict:
+    found = dict()
+    with session_scope() as db:
+        found = db.query(Location).filter_by(id=location_id).first()
+        found = row2dict(found)
+    return found
+
+
+@blueprint_locations.route('<int:location_id>', methods=['GET'])
+def index_location_id(location_id):
+    if request.method == 'GET':
+        return get_locations_id(location_id)
 
 
 @blueprint_locations.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'GET':
-        return show_all()
+        return jsonify(get_locations())
     else:
-        return create()
+        return str(create())

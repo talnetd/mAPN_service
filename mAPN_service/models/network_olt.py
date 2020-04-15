@@ -1,5 +1,5 @@
-import sqlalchemy as sa
 from datetime import datetime
+import sqlalchemy as sa
 from mAPN_service.models import Base
 
 
@@ -29,7 +29,6 @@ class Network_Olt(Base):
             vendor=None,
             model=None,
             create_time=None,
-            network_oltcol=None,
             ip_address=None,
             ssh_port=None,
             ssh_user=None,
@@ -43,7 +42,6 @@ class Network_Olt(Base):
         self.vendor = vendor
         self.model = model
         self.create_time = create_time
-        self.network_oltcol = network_oltcol
         self.ip_address = ip_address
         self.ssh_port = ssh_port
         self.ssh_user = ssh_user
