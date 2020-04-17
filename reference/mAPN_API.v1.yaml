@@ -10,7 +10,7 @@ servers:
 paths:
   /customers:
     get:
-      summary: Get all customers
+      summary: GET ALL CUSTOMERs
       tags:
         - Customer
       responses:
@@ -28,7 +28,7 @@ paths:
       security:
         - api_key_jwt: []
     post:
-      summary: Create a new customer
+      summary: POST A NEW CUSTOMER
       operationId: post-customers
       responses:
         '200':
@@ -52,7 +52,7 @@ paths:
         - api_key_jwt: []
   /boards:
     get:
-      summary: Get all boards
+      summary: GET ALL BOARDs
       tags:
         - Device
       responses:
@@ -65,11 +65,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/Board'
       operationId: get-boards
-      description: Get all boards (which boards Ko TAL)
+      description: Get all boards
       security:
         - api_key_jwt: []
     post:
-      summary: Create a new board
+      summary: POST A NEW BOARD
       operationId: post-boards
       responses:
         '200':
@@ -78,7 +78,7 @@ paths:
             text/plain:
               schema:
                 type: integer
-      description: Create a new board
+      description: create a new board
       security:
         - api_key_jwt: []
       requestBody:
@@ -90,7 +90,7 @@ paths:
         - Device
   /locations:
     get:
-      summary: Get all locations
+      summary: GET ALL LOCATIONs
       tags:
         - Location
       responses:
@@ -107,7 +107,7 @@ paths:
       security:
         - api_key_jwt: []
     post:
-      summary: Create a new location
+      summary: CREATE A NEW LOCATION
       operationId: post-locations
       responses:
         '200':
@@ -128,7 +128,7 @@ paths:
         - Location
   /custom_traffic_plan:
     get:
-      summary: Get all custom traffic plans.
+      summary: GAT ALL TRAFFIC PLANS
       tags:
         - Traffic Plans
       responses:
@@ -145,7 +145,7 @@ paths:
       security:
         - api_key_jwt: []
     post:
-      summary: Create a new custom traffic plan
+      summary: POST A NEW TRAFFIC PLAN
       operationId: post-custom_traffic_plan
       responses:
         '200':
@@ -167,7 +167,7 @@ paths:
         - Traffic Plans
   /internet_traffic_plan:
     get:
-      summary: Get all internet traffic plans
+      summary: GET ALL INTERNET PLANs
       tags:
         - Traffic Plans
       responses:
@@ -184,7 +184,7 @@ paths:
       security:
         - api_key_jwt: []
     post:
-      summary: Create a new internet traffic plan
+      summary: CREATE A NEW INTERNET PLAN
       operationId: post-internet_traffic_plan
       responses:
         '200':
@@ -205,7 +205,7 @@ paths:
         - Traffic Plans
   /olts:
     get:
-      summary: Get all OLT Devices
+      summary: GET ALL OLTs
       tags:
         - Device
       responses:
@@ -222,7 +222,7 @@ paths:
       security:
         - api_key_jwt: []
     post:
-      summary: Create a new OLT device
+      summary: CREATE A NEW OLT
       operationId: post-olts
       responses:
         '200':
@@ -243,7 +243,7 @@ paths:
         - Device
   /routers:
     get:
-      summary: Get all routers
+      summary: GET ALL ROUTERs
       tags:
         - Device
       responses:
@@ -260,7 +260,7 @@ paths:
       security:
         - api_key_jwt: []
     post:
-      summary: Create a new router device
+      summary: CREATE A NEW ROUTER
       operationId: post-routers
       responses:
         '200':
@@ -281,7 +281,7 @@ paths:
               $ref: '#/components/schemas/NetworkRouters'
   /partners:
     get:
-      summary: Get all patner list
+      summary: GET ALL PARTNERs
       tags:
         - Partner
       responses:
@@ -298,7 +298,7 @@ paths:
       security:
         - api_key_jwt: []
     post:
-      summary: Create a new partner info
+      summary: CREATE A NEW PARTNER
       operationId: post-partners
       responses:
         '200':
@@ -320,7 +320,7 @@ paths:
         - Partner
   /voip_traffic_plan:
     get:
-      summary: Get all VOIP traffic plans
+      summary: GET ALL VOIP PLANs
       tags:
         - Traffic Plans
       responses:
@@ -337,7 +337,7 @@ paths:
       security:
         - api_key_jwt: []
     post:
-      summary: Create a new VOIP traffic plan
+      summary: CREATE A NEW VOIP PLAN
       operationId: post-voip_traffic_plan
       responses:
         '200':
@@ -366,7 +366,7 @@ paths:
         required: true
         description: Board ID
     get:
-      summary: Get board info by board ID
+      summary: GET BOARD BY ID
       operationId: get-boards-id
       responses:
         '200':
@@ -389,7 +389,7 @@ paths:
         required: true
         description: Customer ID
     get:
-      summary: Get customer info by customer ID
+      summary: GET CUSTOMER BY ID
       tags:
         - Customer
       responses:
@@ -412,7 +412,7 @@ paths:
         required: true
         description: Plan ID
     get:
-      summary: Get custom traffic plan by plan ID
+      summary: GET TRAFFIC PLAN BY ID
       tags:
         - Traffic Plans
       responses:
@@ -435,7 +435,7 @@ paths:
         required: true
         description: Plan ID
     get:
-      summary: Get internet traffic plan by plan ID
+      summary: GET INTERNET PLAN BY ID
       tags:
         - Traffic Plans
       responses:
@@ -458,7 +458,7 @@ paths:
         required: true
         description: Location ID
     get:
-      summary: Get location info by ID
+      summary: GET LOCATION BY ID
       tags:
         - Location
       responses:
@@ -481,7 +481,7 @@ paths:
         required: true
         description: OLT device ID
     get:
-      summary: Get OLT device info by ID
+      summary: GET OLT BY ID
       tags:
         - Device
       responses:
@@ -504,7 +504,7 @@ paths:
         required: true
         description: Partner ID
     get:
-      summary: Get partner info by ID
+      summary: GET PARTNER BY ID
       tags:
         - Partner
       responses:
@@ -527,7 +527,7 @@ paths:
         required: true
         description: Router ID
     get:
-      summary: Get router info by ID
+      summary: GET ROUTER BY ID
       tags:
         - Device
       responses:
@@ -550,7 +550,7 @@ paths:
         required: true
         description: Plan ID
     get:
-      summary: Get VOIP traffic plan by ID
+      summary: GET VOIP PLAN BY ID
       tags:
         - Traffic Plans
       responses:
