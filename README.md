@@ -11,6 +11,8 @@ following installed in your executable path aka $PATH.
 2. pip3
 3. pyenv or equivalent
 
+> NOTE: For detail installation, please check **INSTALL.md**.
+
 ### Prerequisites
 
 We are using pip dependencies we will use requirements.txt as lock file. Run
@@ -35,7 +37,7 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
 
 ## Authors
 

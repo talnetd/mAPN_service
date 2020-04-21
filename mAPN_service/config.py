@@ -23,6 +23,9 @@ DB_PASSWORD = os.environ.get('DB_PASSWORD')
 DB_NAME = os.environ.get('DB_NAME')
 DB_URI = f'mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
 
+if str(os.environ.get('TESTING')).lower() == 'true':
+    DB_URI = 'sqlite://'
+
 
 make_versioned(user_cls=None)
 engine = create_engine(DB_URI)
