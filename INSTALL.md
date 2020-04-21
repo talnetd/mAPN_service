@@ -10,6 +10,8 @@ The following libraries are required:
 
 ## Install dependencies
 
+### Installing MariaDB or Mysql
+Refer to the following [gudie](https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-18-04)
 ### Installing python
 
 In ubuntu 18.04, `python 3.6` should be already installed. It can be checked using:
@@ -70,6 +72,8 @@ $ pipenv shell
 # to deactivate python environment:
 $ exit
 ```
+## Configuration
+Copy .env.example to .env with the database credentials you just created above. You can use any database name as long as it matches with the one you created.
 
 ## Testing app
 
