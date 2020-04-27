@@ -22,6 +22,8 @@ DB_USER = os.environ.get('DB_USER')
 DB_PASSWORD = os.environ.get('DB_PASSWORD')
 DB_NAME = os.environ.get('DB_NAME')
 DB_URI = f'mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
+API_KEY = os.environ.get('API_KEY')
+
 
 if str(os.environ.get('TESTING')).lower() == 'true':
     DB_URI = 'sqlite://'

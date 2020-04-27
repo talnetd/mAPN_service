@@ -6,6 +6,7 @@ from flask import (
 from mAPN_service.config import session_scope
 from mAPN_service.models.customer import Customer
 from mAPN_service.modules import row2dict
+from mAPN_service.modules.auth import check_api_key
 
 
 blueprint_customers = Blueprint('customers', __name__)
@@ -39,12 +40,14 @@ def get_customer_id(customer_id) -> dict:
 
 
 @blueprint_customers.route('/<int:customer_id>', methods=['GET'])
+@check_api_key
 def index_customer_id(customer_id):
     if request.method == 'GET':
         return get_customer_id(customer_id)
 
 
 @blueprint_customers.route('/', methods=['GET', 'POST'])
+@check_api_key
 def index():
     if request.method == 'GET':
         return jsonify(get_customers())

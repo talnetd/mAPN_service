@@ -8,7 +8,7 @@ info:
 servers:
   - url: 'http://localhost:5000'
     description: LOCAL_DEV
-  - url: 'http://mapnapi.venuslab.co/'
+  - url: 'http://mapnapi.venuslab.co'
     description: CLOUD_DEV
 paths:
   /customers:

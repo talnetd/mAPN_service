@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from mAPN_service.config import session_scope
 from mAPN_service.models.boards import Boards
 from mAPN_service.modules import row2dict
+from mAPN_service.modules.auth import check_api_key
 
 
 blueprint_boards = Blueprint('boards', __name__)
@@ -35,12 +36,14 @@ def get_boards_by_id(board_id) -> dict:
 
 
 @blueprint_boards.route('/<int:board_id>', methods=['GET'])
+@check_api_key
 def index_board_id(board_id):
     if request.method == 'GET':
         return get_boards_by_id(board_id)
 
 
 @blueprint_boards.route('/', methods=['GET', 'POST'])
+@check_api_key
 def index():
     if request.method == 'GET':
         return jsonify(get_boards())

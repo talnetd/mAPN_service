@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from mAPN_service.config import session_scope
 from mAPN_service.models.network_router import Network_Router
 from mAPN_service.modules import row2dict
+from mAPN_service.modules.auth import check_api_key
 
 
 blueprint_routers = Blueprint('network_routers', __name__)
@@ -35,12 +36,14 @@ def get_routers_by_id(router_id) -> dict:
 
 
 @blueprint_routers.route('/<int:router_id>', methods=['GET'])
+@check_api_key
 def index_router_id(router_id):
     if request.method == 'GET':
         return get_routers_by_id(router_id)
 
 
 @blueprint_routers.route('/', methods=['GET', 'POST'])
+@check_api_key
 def index():
     if request.method == 'GET':
         return jsonify(get_routers())
