@@ -26,8 +26,8 @@ def create() -> int:
     data = -1
     payload = request.get_json()
     required_fields = ['id', 'username', 'password', 'email', 'phone']
-    for k in payload:
-        if k not in required_fields:
+    for k in required_fields:
+        if k not in payload:
             abort(HTTPStatus.BAD_REQUEST, f'{k} is required.')
 
     with session_scope() as db:
