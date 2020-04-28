@@ -1,7 +1,9 @@
+from http import HTTPStatus
 from flask import (
     Blueprint,
     request,
-    jsonify
+    jsonify,
+    abort
 )
 from mAPN_service.config import session_scope
 from mAPN_service.models.customer import Customer
@@ -22,12 +24,24 @@ def get_customers():
 
 def create() -> int:
     data = -1
+    payload = request.get_json()
+    required_fields = ['id', 'username', 'password', 'email', 'phone']
+    for k in payload:
+        if k not in required_fields:
+            abort(HTTPStatus.BAD_REQUEST, f'{k} is required.')
+
     with session_scope() as db:
-        customer = Customer(**request.get_json())
-        db.add(customer)
-        db.flush()
-        db.refresh(customer)
-        data = customer.id
+        found = db.query(Customer).filter_by(id=payload.get('id')).first()
+        if not found:
+            customer = Customer(**payload)
+            db.add(customer)
+            db.flush()
+            db.refresh(customer)
+            data = customer.id
+        else:
+            abort(
+                HTTPStatus.CONFLICT,
+                'User {} already exists.'.format(payload.get('id')))
     return data
 
 
