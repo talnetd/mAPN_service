@@ -25,6 +25,10 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Customer'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
       operationId: get-customers
       description: Get all customers
       parameters: []
@@ -572,6 +576,9 @@ components:
     Customer:
       title: Customer
       type: object
+      x-examples: {}
+      x-tags:
+        - Customer
       properties:
         id:
           type: integer
@@ -605,9 +612,12 @@ components:
           type: string
         splitter_port_no:
           type: string
-      x-examples: {}
-      x-tags:
-        - Customer
+      required:
+        - id
+        - username
+        - email
+        - password
+        - phone
     Board:
       title: Board
       type: object

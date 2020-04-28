@@ -48,8 +48,9 @@ def create() -> int:
 def get_customer_id(customer_id) -> dict:
     found = dict()
     with session_scope() as db:
-        found = db.query(Customer).filter_by(id=customer_id).first()
-        found = row2dict(found)
+        record = db.query(Customer).filter_by(id=customer_id).first()
+        if record:
+            found = row2dict(record)
     return found
 
 
