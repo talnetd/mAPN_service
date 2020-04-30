@@ -615,9 +615,7 @@ components:
       required:
         - id
         - username
-        - email
         - password
-        - phone
     Board:
       title: Board
       type: object
