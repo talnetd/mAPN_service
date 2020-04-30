@@ -571,6 +571,25 @@ paths:
       security:
         - api_key_jwt: []
       description: Get VOIP traffic plan information by plan ID.
+  /microtik/:
+    post:
+      summary: ''
+      operationId: post-microtik
+      responses:
+        '200':
+          description: OK
+      description: Execute commands using Microtik API
+      security:
+        - api_key_jwt: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Microtik'
+        description: ''
+      tags:
+        - Microtik
+    parameters: []
 components:
   schemas:
     Customer:
@@ -759,6 +778,60 @@ components:
       x-tags:
         - Traffic Plans
       description: ''
+    Microtik:
+      title: Microtik
+      type: object
+      x-examples:
+        Example Generic:
+          ip: 192.168.1.1
+          username: root
+          password: 'i482Mvb!'
+          resource: /ip/address
+          action: call
+          command: print
+          payload:
+            param: value
+            paramN: valueN
+      x-tags:
+        - Microtik
+      description: Microtik generic API
+      properties:
+        ip:
+          type: string
+          description: IP Address
+        username:
+          type: string
+          description: Username
+        password:
+          type: string
+          description: Password
+        resource:
+          type: string
+          description: API Resource part
+        command:
+          type: string
+          description: API Command part
+        payload:
+          type: object
+          properties:
+            param:
+              type: string
+              description: 'param has "-" (hyphen), use "_" (underscore)'
+            '':
+              type: string
+        action:
+          type: string
+          default: get
+          enum:
+            - get
+            - add
+            - set
+            - call
+      required:
+        - ip
+        - username
+        - password
+        - resource
   securitySchemes:
     api_key_jwt:
       type: http
@@ -776,3 +849,5 @@ tags:
     description: Partner APIs
   - name: Traffic Plans
     description: Traffic Plan APIs
+  - name: Microtik
+    description: wrapper API for Microtik routers
