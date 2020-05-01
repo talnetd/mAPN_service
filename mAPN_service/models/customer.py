@@ -11,7 +11,7 @@ class Customer(Base):
     id = sa.Column(sa.Integer, primary_key=True)
     username = sa.Column(sa.String(16))
     email = sa.Column(sa.String(255))
-    password = sa.Column(sa.String(32))
+    password = sa.Column(sa.Text)
     full_name = sa.Column(sa.String(45))
     phone = sa.Column(sa.String(45))
     date_of_birth = sa.Column(sa.DateTime)

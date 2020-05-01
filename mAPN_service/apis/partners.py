@@ -1,4 +1,5 @@
-from flask import Blueprint, request, jsonify
+from http import HTTPStatus
+from flask import Blueprint, request, jsonify, abort
 from mAPN_service.config import session_scope
 from mAPN_service.models.partner import Partner
 from mAPN_service.modules import row2dict
@@ -18,12 +19,24 @@ def get_partners() -> list:
 
 def create() -> int:
     data = -1
+    payload = request.get_json()
+    required_fields = []
+    for k in required_fields:
+        if k not in payload:
+            abort(HTTPStatus.BAD_REQUEST, f'{k} is required.')
+
     with session_scope() as db:
-        partner = Partner(**request.form)
-        db.add(partner)
-        db.flush()
-        db.refresh(partner)
-        data = partner.id
+        found = db.query(Partner).filter_by(id=payload.get('id')).first()
+        if not found:
+            partner = Partner(**payload)
+            db.add(partner)
+            db.flush()
+            db.refresh(partner)
+            data = partner.id
+        else:
+            abort(
+                HTTPStatus.CONFLICT,
+                'Partner {} already exists.'.format(payload.get('id')))
     return data
 
 
