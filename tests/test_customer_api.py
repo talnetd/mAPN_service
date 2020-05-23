@@ -1,4 +1,5 @@
 import random
+
 import pytest
 
 
@@ -10,12 +11,11 @@ def test_customer_index(client):
 
 @pytest.mark.usefixtures("client")
 def test_customer_create(client):
-    data = dict(
-        username='name1',
-        email='name1@email.com',
-        password='name1',
-        full_name='Name One'
-    )
+    data = dict(id=random.randint(0, 100),
+                username='name1',
+                email='name1@email.com',
+                password='name1',
+                full_name='Name One')
     resp = client.post('/customers/', json=data)
     assert 200 == resp.status_code and resp.data.isdigit()
 

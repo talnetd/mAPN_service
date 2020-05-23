@@ -1,0 +1,20 @@
+- [x] <Rule '/' (OPTIONS, GET, HEAD) -> index.index>,
+- [x] <Rule '/boards/' (POST, OPTIONS, GET, HEAD) -> boards.index>,
+- [x] <Rule '/boards/<board_id>' (OPTIONS, GET, HEAD) -> boards.index_board_id>,
+- [x] <Rule '/customers/<customer_id>' (OPTIONS, GET, HEAD) -> customers.index_customer_id>,
+- [x] <Rule '/custom_traffic_plan/'>
+- [x] <Rule '/custom_traffic_plan/<plan_id>'>
+- [x] <Rule '/internet_traffic_plan/'>
+- [x] <Rule '/internet_traffic_plan/<plan_id>'>
+- [x] <Rule '/locations/' (POST, OPTIONS, GET, HEAD) -> locations.index>,
+- [x] <Rule '/locations/<location_id>' (OPTIONS, GET, HEAD) -> locations.index_location_id>,
+- [x] <Rule '/microtik/' (POST, OPTIONS) -> microtik.index>,
+- [x] <Rule '/olts/' (POST, OPTIONS, GET, HEAD) -> network_olts.index>,
+- [x] <Rule '/olts/<olt_id>' (OPTIONS, GET, HEAD) -> network_olts.index_olts_id>])
+- [x] <Rule '/partners/' (POST, OPTIONS, GET, HEAD) -> partners.index>,
+- [x] <Rule '/partners/<partner_id>' (OPTIONS, GET, HEAD) -> partners.index_partnersid>,
+- [x] <Rule '/routers/' (POST, OPTIONS, GET, HEAD) -> network_routers.index>,
+- [x] <Rule '/routers/<router_id>' (OPTIONS, GET, HEAD) -> network_routers.index_router_id>,
+- [x] <Rule '/voip_traffic_plan/'>
+- [x] <Rule '/voip_traffic_plan/<plan_id>'>
+- [x] <Rule '/static/<filename>' (OPTIONS, GET, HEAD) -> static>,
