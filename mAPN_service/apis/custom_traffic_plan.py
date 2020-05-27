@@ -1,26 +1,26 @@
 from http import HTTPStatus
 
-from flask import Blueprint, abort, jsonify, request
+from flask import Blueprint, abort, jsonify, request, make_response
 
 from mAPN_service.config import session_scope
 from mAPN_service.models.custom_traffic_plan import CustomTrafficPlan
 from mAPN_service.modules import row2dict
 from mAPN_service.modules.auth import check_api_key
 
-blueprint_CTP = Blueprint('custom_traffic_plan', __name__)
+
+blueprint_CTP = Blueprint("custom_traffic_plan", __name__)
+required_fields = ["title", "service_name", "price", "bandwidth"]
 
 
 def create() -> int:
     data = -1
     payload = request.get_json()
-    required_fields = ['title', 'service_name', 'price', 'bandwidth']
     for k in required_fields:
         if k not in payload:
-            abort(HTTPStatus.BAD_REQUEST, f'{k} is required.')
+            abort(HTTPStatus.BAD_REQUEST, f"{k} is required.")
 
     with session_scope() as db:
-        found = db.query(CustomTrafficPlan).filter_by(
-            id=payload.get('id')).first()
+        found = db.query(CustomTrafficPlan).filter_by(id=payload.get("id")).first()
         if not found:
             plan_info = CustomTrafficPlan(**payload)
             db.add(plan_info)
@@ -30,8 +30,8 @@ def create() -> int:
         else:
             abort(
                 HTTPStatus.CONFLICT,
-                'Custom Traffic Plan {} already exists.'.format(
-                    payload.get('id')))
+                "Custom Traffic Plan {} already exists.".format(payload.get("id")),
+            )
 
     return data
 
@@ -54,17 +54,32 @@ def get_plan_by_id(plan_id):
     return found
 
 
-@blueprint_CTP.route('/<int:plan_id>', methods=['GET'])
+def update_plan(plan_id):
+    payload = request.get_json()
+    with session_scope() as db:
+        found = db.query(CustomTrafficPlan).filter_by(id=plan_id).first()
+        if not found:
+            abort(HTTPStatus.NOT_FOUND, f"Custom Traffic Plan ({plan_id}) not found.")
+        for k, v in payload.items():
+            if hasattr(found, k):
+                setattr(found, k, v)
+        db.add(found)
+    return "", HTTPStatus.NO_CONTENT
+
+
+@blueprint_CTP.route("/<int:plan_id>", methods=["GET", "PUT"])
 @check_api_key
 def index_plan_id(plan_id):
-    if request.method == 'GET':
+    if request.method == "GET":
         return get_plan_by_id(plan_id)
+    elif request.method == "PUT":
+        return update_plan(plan_id)
 
 
-@blueprint_CTP.route('/', methods=['GET', 'POST'])
+@blueprint_CTP.route("/", methods=["GET", "POST"])
 @check_api_key
 def index():
-    if request.method == 'GET':
+    if request.method == "GET":
         return jsonify(get_plans())
     else:
         return str(create())

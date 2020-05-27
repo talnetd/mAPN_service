@@ -433,6 +433,22 @@ paths:
       description: Get custom traffic plan by plan ID.
       security:
         - api_key_jwt: []
+    put:
+      summary: ''
+      operationId: put-custom_traffic_plan-id
+      responses:
+        '204':
+          description: No Content
+      description: Edit Custom Traffic Plan
+      security:
+        - api_key_jwt: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomTrafficPlan'
+      tags:
+        - Traffic Plans
   '/internet_traffic_plan/{id}':
     parameters:
       - schema:
@@ -456,6 +472,22 @@ paths:
       description: Get internet traffic plan by plan ID.
       security:
         - api_key_jwt: []
+    put:
+      summary: Update Internet Traffic Plan
+      operationId: put-internet_traffic_plan-id
+      responses:
+        '204':
+          description: No Content
+      description: Update Internet Traffic Plan
+      security:
+        - api_key_jwt: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InternetTrafficPlan'
+      tags:
+        - Traffic Plans
   '/locations/{id}':
     parameters:
       - schema:
@@ -571,7 +603,23 @@ paths:
       security:
         - api_key_jwt: []
       description: Get VOIP traffic plan information by plan ID.
-  /microtik/:
+    put:
+      summary: Update VoIP Traffic Plan
+      operationId: put-voip_traffic_plan-id
+      responses:
+        '204':
+          description: No Content
+      description: Update VoIP Traffic Plan
+      security:
+        - api_key_jwt: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VoipTrafficPlan'
+      tags:
+        - Traffic Plans
+  /microtik:
     post:
       summary: ''
       operationId: post-microtik

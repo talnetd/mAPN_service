@@ -24,3 +24,14 @@ def test_ctp_get_one(client):
     plan_id = 1
     resp = client.get(f"/custom_traffic_plan/{plan_id}")
     assert 200 == resp.status_code and isinstance(resp.get_json(), dict)
+
+
+@pytest.mark.usefixtures("client")
+def test_ctp_update_one(client):
+    plan_id = 1
+    data = dict(title='CTP #1',
+                service_name='Service #1',
+                price=random.randrange(1000, 2000),
+                bandwidth=random.randrange(10, 100))
+    resp = client.put(f"/custom_traffic_plan/{plan_id}", json=data)
+    assert 204 == resp.status_code

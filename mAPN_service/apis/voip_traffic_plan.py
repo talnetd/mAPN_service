@@ -54,11 +54,26 @@ def get_plan_by_id(plan_id):
     return found
 
 
-@blueprint_VTP.route('/<int:plan_id>', methods=['GET'])
+def update_plan(plan_id):
+    payload = request.get_json()
+    with session_scope() as db:
+        found = db.query(VoipTrafficPlan).filter_by(id=plan_id).first()
+        if not found:
+            abort(HTTPStatus.NOT_FOUND, f"Internet Traffic Plan ({plan_id}) not found.")
+        for k, v in payload.items():
+            if hasattr(found, k):
+                setattr(found, k, v)
+        db.add(found)
+    return "", HTTPStatus.NO_CONTENT
+
+
+@blueprint_VTP.route('/<int:plan_id>', methods=['GET', 'PUT'])
 @check_api_key
 def index_plan_id(plan_id):
     if request.method == 'GET':
         return get_plan_by_id(plan_id)
+    elif request.method == 'PUT':
+        return update_plan(plan_id)
 
 
 @blueprint_VTP.route('/', methods=['GET', 'POST'])
