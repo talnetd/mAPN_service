@@ -6,7 +6,7 @@ from mAPN_service.models import Base
 class Network_Olt(Base):
 
     __versioned__ = {}
-    __tablename__ = 'network_olt'
+    __tablename__ = "network_olt"
 
     id = sa.Column(sa.Integer, primary_key=True)
     vendor = sa.Column(sa.String(255))
@@ -24,20 +24,22 @@ class Network_Olt(Base):
     updated_at = sa.Column(sa.DateTime, onupdate=datetime.now)
     deleted_at = sa.Column(sa.DateTime)
 
-    def __init__(self,
-            id=None,
-            vendor=None,
-            model=None,
-            create_time=None,
-            ip_address=None,
-            ssh_port=None,
-            ssh_user=None,
-            ssh_password=None,
-            uplink_board=None,
-            uplink_interface=None,
-            network_oltcol1=None,
-            network_router_id=None,
-            network_router_partner_location_id=None):
+    def __init__(
+        self,
+        id=None,
+        vendor=None,
+        model=None,
+        create_time=None,
+        ip_address=None,
+        ssh_port=None,
+        ssh_user=None,
+        ssh_password=None,
+        uplink_board=None,
+        uplink_interface=None,
+        network_oltcol1=None,
+        network_router_id=None,
+        network_router_partner_location_id=None,
+    ):
         self.id = id
         self.vendor = vendor
         self.model = model
@@ -53,5 +55,5 @@ class Network_Olt(Base):
         self.network_router_partner_location_id = network_router_partner_location_id
 
     def __repr__(self):
-        k_v = ', '.join([f'{k}={v}' for k, v in self.__dict__.items()])
-        return f'<{self.__tablename__} {k_v}>'
+        k_v = ", ".join([f"{k}={v}" for k, v in self.__dict__.items()])
+        return f"<{self.__tablename__} {k_v}>"

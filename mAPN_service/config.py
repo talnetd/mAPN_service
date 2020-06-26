@@ -15,22 +15,49 @@ from mAPN_service.models.internet_traffic_plan import InternetTrafficPlan
 from mAPN_service.models.voip_traffic_plan import VoipTrafficPlan
 from mAPN_service.models.custom_traffic_plan import CustomTrafficPlan
 
+GLOBAL_MYSQL_DB_ENCODING = "utf8mb4"
+MYSQL_APP_DB_HOST = os.environ.get("MYSQL_APP_DB_HOST") or os.environ.get(
+    "DB_HOST", "localhost"
+)
+MYSQL_APP_DB_PORT = int(
+    os.environ.get("MYSQL_APP_DB_PORT") or os.environ.get("DB_PORT", 3306)
+)
+MYSQL_APP_DB_USER = os.environ.get("MYSQL_APP_DB_USER") or os.environ.get("DB_USER")
+MYSQL_APP_DB_PASSWORD = os.environ.get("MYSQL_APP_DB_PASSWORD") or os.environ.get(
+    "DB_PASSWORD"
+)
+MYSQL_APP_DB_NAME = os.environ.get("MYSQL_APP_DB_NAME") or os.environ.get("DB_NAME")
+MYSQL_APP_DB_ENCODING = (
+    os.environ.get("MYSQL_APP_DB_ENCODING") or GLOBAL_MYSQL_DB_ENCODING
+)
+MYSQL_APP_DB_URI = (
+    f"mysql+pymysql://{MYSQL_APP_DB_USER}:{MYSQL_APP_DB_PASSWORD}@{MYSQL_APP_DB_HOST}:"
+    f"{MYSQL_APP_DB_PORT}/{MYSQL_APP_DB_NAME}"
+)
+APP_API_KEY = os.environ.get("API_KEY") or os.environ.get("APP_API_KEY")
 
-DB_HOST = os.environ.get('DB_HOST', 'localhost')
-DB_PORT = os.environ.get('DB_PORT', 3306)
-DB_USER = os.environ.get('DB_USER')
-DB_PASSWORD = os.environ.get('DB_PASSWORD')
-DB_NAME = os.environ.get('DB_NAME')
-DB_URI = f'mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
-API_KEY = os.environ.get('API_KEY')
+
+MYSQL_RADIUS_DB_HOST = os.environ.get("MYSQL_RADIUS_DB_HOST", "localhost")
+MYSQL_RADIUS_DB_PORT = int(os.environ.get("MYSQL_RADIUS_DB_PORT", 3306))
+MYSQL_RADIUS_DB_USER = os.environ.get("MYSQL_RADIUS_DB_USER", "root")
+MYSQL_RADIUS_DB_PASSWORD = os.environ.get("MYSQL_RADIUS_DB_PASSWORD", "toor")
+MYSQL_RADIUS_DB_NAME = os.environ.get("MYSQL_RADIUS_DB_NAME", "test")
+MYSQL_RADIUS_DB_ENCODING = (
+    os.environ.get("MYSQL_RADIUS_DB_ENCODING") or GLOBAL_MYSQL_DB_ENCODING
+)
+
+MYSQL_RADIUS_DB_URI = (
+    f"mysql+pymysql://{MYSQL_RADIUS_DB_USER}:{MYSQL_RADIUS_DB_PASSWORD}@{MYSQL_RADIUS_DB_HOST}:"
+    f"{MYSQL_RADIUS_DB_PORT}/{MYSQL_RADIUS_DB_NAME}"
+)
 
 
-if str(os.environ.get('TESTING')).lower() == 'true':
-    DB_URI = 'sqlite://'
+if str(os.environ.get("TESTING")).lower() == "true":
+    MYSQL_APP_DB_URI = "sqlite://"
 
 
 make_versioned(user_cls=None)
-engine = create_engine(DB_URI)
+engine = create_engine(MYSQL_APP_DB_URI)
 tables = [
     Boards.__table__,
     Customer.__table__,
@@ -40,7 +67,7 @@ tables = [
     Partner.__table__,
     InternetTrafficPlan.__table__,
     VoipTrafficPlan.__table__,
-    CustomTrafficPlan.__table__
+    CustomTrafficPlan.__table__,
 ]
 Base.metadata.create_all(engine, tables=tables)
 Session = sessionmaker(bind=engine)
@@ -51,12 +78,50 @@ sqlalchemy.orm.configure_mappers()
 
 @contextmanager
 def session_scope():
+    """
+    Create a new Database Session (using SQLAlchemy) which is generated from sessionmaker factory.
+    NOTE: This depends on SQLAlchemy models.
+
+    Usage:
+
+    ```python
+    # import required modules and sqlalchemy models
+    # importing model
+    from mAPN_service.models.testing_table import TestingTable
+    # importing session_scope function from config module
+    from mAPN_service.config import session_scope
+
+    # creating a new record
+    with session_scope() as session:
+        record = TestingTable(**my_data)
+        session.add(record)
+        session.flush()
+        session.refresh(record)
+        inserted_id = record.id
+
+    # select existing record (single)
+    record_id = 100
+    with session_scope() as session:
+        found_record = session.query(TestingTable).filter_by(id=record_id).first()
+
+    # WARNING: NOT RECOMMENDED. PLEASE USE BATCH QUERY (BY CHUNK/PAGINATION)
+    # select all records
+    with session_scope() as session:
+        records = session.query(TestingTable).all()
+    ```
+
+    # select records by batch (Not supported right now!)
+    N/A
+
+    Yield:
+        {Session} A Session object.
+    """
     session = Session()
 
     try:
         yield session
         session.commit()
-    except:
+    except:  # noqa
         session.rollback()
         raise
     finally:

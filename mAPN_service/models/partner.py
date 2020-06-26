@@ -6,7 +6,7 @@ from mAPN_service.models import Base
 class Partner(Base):
 
     __versioned__ = {}
-    __tablename__ = 'partner'
+    __tablename__ = "partner"
 
     id = sa.Column(sa.Integer, primary_key=True)
     name = sa.Column(sa.String(16))
@@ -14,12 +14,10 @@ class Partner(Base):
     updated_at = sa.Column(sa.DateTime, onupdate=datetime.now)
     deleted_at = sa.Column(sa.DateTime)
 
-    def __init__(self,
-            id=None,
-            name=None):
+    def __init__(self, id=None, name=None):
         self.id = id
         self.name = name
 
     def __repr__(self):
-        k_v = ', '.join([f'{k}={v}' for k, v in self.__dict__.items()])
-        return f'<{self.__tablename__} {k_v}>'
+        k_v = ", ".join([f"{k}={v}" for k, v in self.__dict__.items()])
+        return f"<{self.__tablename__} {k_v}>"

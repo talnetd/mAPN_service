@@ -6,7 +6,7 @@ from mAPN_service.models import Base
 class Network_Router(Base):
 
     __versioned__ = {}
-    __tablename__ = 'network_router'
+    __tablename__ = "network_router"
 
     id = sa.Column(sa.Integer, primary_key=True)
     name = sa.Column(sa.String(16))
@@ -25,20 +25,22 @@ class Network_Router(Base):
     updated_at = sa.Column(sa.DateTime, onupdate=datetime.now)
     deleted_at = sa.Column(sa.DateTime)
 
-    def __init__(self,
-            id=None,
-            name=None,
-            nas_type=None,
-            vendor_model=None,
-            physical_address=None,
-            host_address=None,
-            nas_address=None,
-            authorization_accounting_type=None,
-            radius_secret=None,
-            enable_api=None,
-            login=None,
-            username=None,
-            partner_locations_id=None):
+    def __init__(
+        self,
+        id=None,
+        name=None,
+        nas_type=None,
+        vendor_model=None,
+        physical_address=None,
+        host_address=None,
+        nas_address=None,
+        authorization_accounting_type=None,
+        radius_secret=None,
+        enable_api=None,
+        login=None,
+        username=None,
+        partner_locations_id=None,
+    ):
 
         self.id = id
         self.name = name
@@ -55,5 +57,5 @@ class Network_Router(Base):
         self.partner_locations_id = partner_locations_id
 
     def __repr__(self):
-        k_v = ', '.join([f'{k}={v}' for k, v in self.__dict__.items()])
-        return f'<{self.__tablename__} {k_v}>'
+        k_v = ", ".join([f"{k}={v}" for k, v in self.__dict__.items()])
+        return f"<{self.__tablename__} {k_v}>"

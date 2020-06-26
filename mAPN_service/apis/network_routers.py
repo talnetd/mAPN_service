@@ -6,7 +6,7 @@ from mAPN_service.modules import row2dict
 from mAPN_service.modules.auth import check_api_key
 
 
-blueprint_routers = Blueprint('network_routers', __name__)
+blueprint_routers = Blueprint("network_routers", __name__)
 
 
 def get_routers():
@@ -23,10 +23,10 @@ def create() -> -1:
     required_fields = []
     for k in required_fields:
         if k not in payload:
-            abort(HTTPStatus.BAD_REQUEST, f'{k} is required.')
+            abort(HTTPStatus.BAD_REQUEST, f"{k} is required.")
 
     with session_scope() as db:
-        found = db.query(Network_Router).filter_by(id=payload.get('id')).first()
+        found = db.query(Network_Router).filter_by(id=payload.get("id")).first()
         if not found:
             router = Network_Router(**payload)
             db.add(router)
@@ -36,7 +36,8 @@ def create() -> -1:
         else:
             abort(
                 HTTPStatus.CONFLICT,
-                'Router {} already exists.'.format(payload.get('id')))
+                "Router {} already exists.".format(payload.get("id")),
+            )
     return data
 
 
@@ -48,17 +49,17 @@ def get_routers_by_id(router_id) -> dict:
     return found
 
 
-@blueprint_routers.route('/<int:router_id>', methods=['GET'])
+@blueprint_routers.route("/<int:router_id>", methods=["GET"])
 @check_api_key
 def index_router_id(router_id):
-    if request.method == 'GET':
+    if request.method == "GET":
         return get_routers_by_id(router_id)
 
 
-@blueprint_routers.route('/', methods=['GET', 'POST'])
+@blueprint_routers.route("/", methods=["GET", "POST"])
 @check_api_key
 def index():
-    if request.method == 'GET':
+    if request.method == "GET":
         return jsonify(get_routers())
     else:
         return str(create())

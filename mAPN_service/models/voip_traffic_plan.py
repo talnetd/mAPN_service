@@ -6,7 +6,7 @@ from mAPN_service.models import Base
 class VoipTrafficPlan(Base):
 
     __versioned__ = {}
-    __tablename__ = 'voip_traffic_plan'
+    __tablename__ = "voip_traffic_plan"
 
     id = sa.Column(sa.Integer, primary_key=True)
     title = sa.Column(sa.String(191), nullable=False)
@@ -16,16 +16,12 @@ class VoipTrafficPlan(Base):
     updated_at = sa.Column(sa.DateTime, onupdate=datetime.now)
     deleted_at = sa.Column(sa.DateTime)
 
-    def __init__(self,
-            id=None,
-            title=None,
-            service_name=None,
-            price=None):
+    def __init__(self, id=None, title=None, service_name=None, price=None):
         self.id = id
         self.title = title
         self.service_name = service_name
         self.price = price
 
     def __repr__(self):
-        k_v = ', '.join([f'{k}={v}' for k, v in self.__dict__.items()])
-        return f'<{self.__tablename__} {k_v}>'
+        k_v = ", ".join([f"{k}={v}" for k, v in self.__dict__.items()])
+        return f"<{self.__tablename__} {k_v}>"

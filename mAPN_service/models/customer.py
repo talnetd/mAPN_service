@@ -6,7 +6,7 @@ from mAPN_service.models import Base
 class Customer(Base):
 
     __versioned__ = {}
-    __tablename__ = 'customer'
+    __tablename__ = "customer"
 
     id = sa.Column(sa.Integer, primary_key=True)
     username = sa.Column(sa.String(16))
@@ -25,23 +25,25 @@ class Customer(Base):
     partner_isp_id = sa.Column(sa.String(45))
     splitter_port_no = sa.Column(sa.String(45))
 
-    def __init__(self,
-                 id=None,
-                 username=None,
-                 email=None,
-                 password=None,
-                 full_name=None,
-                 phone=None,
-                 date_of_birth=None,
-                 active_status=None,
-                 type_of_billing=None,
-                 customer_category=None,
-                 customer_location=None,
-                 date_added=None,
-                 geo_data=None,
-                 gpon_ont=None,
-                 partner_isp_id=None,
-                 splitter_port_no=None):
+    def __init__(
+        self,
+        id=None,
+        username=None,
+        email=None,
+        password=None,
+        full_name=None,
+        phone=None,
+        date_of_birth=None,
+        active_status=None,
+        type_of_billing=None,
+        customer_category=None,
+        customer_location=None,
+        date_added=None,
+        geo_data=None,
+        gpon_ont=None,
+        partner_isp_id=None,
+        splitter_port_no=None,
+    ):
         self.id = id
         self.username = username
         self.email = email
@@ -60,5 +62,5 @@ class Customer(Base):
         self.splitter_port_no = splitter_port_no
 
     def __repr__(self):
-        k_v = ', '.join([f'{k}={v}' for k, v in self.__dict__.items()])
-        return f'<{self.__tablename__} {k_v}>'
+        k_v = ", ".join([f"{k}={v}" for k, v in self.__dict__.items()])
+        return f"<{self.__tablename__} {k_v}>"

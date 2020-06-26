@@ -7,20 +7,19 @@ from mAPN_service.models.voip_traffic_plan import VoipTrafficPlan
 from mAPN_service.modules import row2dict
 from mAPN_service.modules.auth import check_api_key
 
-blueprint_VTP = Blueprint('voip_traffic_plan', __name__)
+blueprint_VTP = Blueprint("voip_traffic_plan", __name__)
 
 
 def create() -> int:
     data = -1
     payload = request.get_json()
-    required_fields = ['title', 'service_name', 'price']
+    required_fields = ["title", "service_name", "price"]
     for k in required_fields:
         if k not in payload:
-            abort(HTTPStatus.BAD_REQUEST, f'{k} is required.')
+            abort(HTTPStatus.BAD_REQUEST, f"{k} is required.")
 
     with session_scope() as db:
-        found = db.query(VoipTrafficPlan).filter_by(
-            id=payload.get('id')).first()
+        found = db.query(VoipTrafficPlan).filter_by(id=payload.get("id")).first()
         if not found:
             plan_info = VoipTrafficPlan(**payload)
             db.add(plan_info)
@@ -30,8 +29,8 @@ def create() -> int:
         else:
             abort(
                 HTTPStatus.CONFLICT,
-                'Custom Traffic Plan {} already exists.'.format(
-                    payload.get('id')))
+                "Custom Traffic Plan {} already exists.".format(payload.get("id")),
+            )
 
     return data
 
@@ -67,19 +66,19 @@ def update_plan(plan_id):
     return "", HTTPStatus.NO_CONTENT
 
 
-@blueprint_VTP.route('/<int:plan_id>', methods=['GET', 'PUT'])
+@blueprint_VTP.route("/<int:plan_id>", methods=["GET", "PUT"])
 @check_api_key
 def index_plan_id(plan_id):
-    if request.method == 'GET':
+    if request.method == "GET":
         return get_plan_by_id(plan_id)
-    elif request.method == 'PUT':
+    elif request.method == "PUT":
         return update_plan(plan_id)
 
 
-@blueprint_VTP.route('/', methods=['GET', 'POST'])
+@blueprint_VTP.route("/", methods=["GET", "POST"])
 @check_api_key
 def index():
-    if request.method == 'GET':
+    if request.method == "GET":
         return jsonify(get_plans())
     else:
         return str(create())
