@@ -6,7 +6,7 @@ from mAPN_service.modules import row2dict
 from mAPN_service.modules.auth import check_api_key
 
 
-blueprint_partners = Blueprint('partners', __name__)
+blueprint_partners = Blueprint("partners", __name__)
 
 
 def get_partners() -> list:
@@ -23,10 +23,10 @@ def create() -> int:
     required_fields = []
     for k in required_fields:
         if k not in payload:
-            abort(HTTPStatus.BAD_REQUEST, f'{k} is required.')
+            abort(HTTPStatus.BAD_REQUEST, f"{k} is required.")
 
     with session_scope() as db:
-        found = db.query(Partner).filter_by(id=payload.get('id')).first()
+        found = db.query(Partner).filter_by(id=payload.get("id")).first()
         if not found:
             partner = Partner(**payload)
             db.add(partner)
@@ -36,7 +36,8 @@ def create() -> int:
         else:
             abort(
                 HTTPStatus.CONFLICT,
-                'Partner {} already exists.'.format(payload.get('id')))
+                "Partner {} already exists.".format(payload.get("id")),
+            )
     return data
 
 
@@ -48,17 +49,17 @@ def get_partners_by_id(partner_id) -> dict:
     return found
 
 
-@blueprint_partners.route('/<int:partner_id>', methods=['GET'])
+@blueprint_partners.route("/<int:partner_id>", methods=["GET"])
 @check_api_key
 def index_partnersid(partner_id):
-    if request.method == 'GET':
+    if request.method == "GET":
         return get_partners_by_id(partner_id)
 
 
-@blueprint_partners.route('/', methods=['GET', 'POST'])
+@blueprint_partners.route("/", methods=["GET", "POST"])
 @check_api_key
 def index():
-    if request.method == 'GET':
+    if request.method == "GET":
         return jsonify(get_partners())
     else:
         return str(create())

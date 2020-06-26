@@ -8,7 +8,7 @@ from mAPN_service.modules import libmysql
 def client():
 
     tc = app.test_client()
-    tc.environ_base['HTTP_AUTHORIZATION'] = f'Bearer {APP_API_KEY}'
+    tc.environ_base["HTTP_AUTHORIZATION"] = f"Bearer {APP_API_KEY}"
     return tc
 
 

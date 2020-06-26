@@ -9,8 +9,7 @@ def test_sql_01_insert(mysql_lib):
     record = mysql_lib.execute(sql)
     assert record > 0
 
-    sql = "INSERT INTO board (name, port_count) VALUES ('{}', {})".format(
-        "hello", 4)
+    sql = "INSERT INTO board (name, port_count) VALUES ('{}', {})".format("hello", 4)
     record = mysql_lib.execute(sql)
     assert record > 0
 

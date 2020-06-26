@@ -6,7 +6,7 @@ from mAPN_service.modules import row2dict
 from mAPN_service.modules.auth import check_api_key
 
 
-blueprint_olts = Blueprint('network_olts', __name__)
+blueprint_olts = Blueprint("network_olts", __name__)
 
 
 def get_olts():
@@ -23,10 +23,10 @@ def create() -> int:
     required_fields = []
     for k in required_fields:
         if k not in payload:
-            abort(HTTPStatus.BAD_REQUEST, f'{k} is required.')
+            abort(HTTPStatus.BAD_REQUEST, f"{k} is required.")
 
     with session_scope() as db:
-        found = db.query(Network_Olt).filter_by(id=payload.get('id')).first()
+        found = db.query(Network_Olt).filter_by(id=payload.get("id")).first()
         if not found:
             olt = Network_Olt(**payload)
             db.add(olt)
@@ -35,8 +35,8 @@ def create() -> int:
             data = olt.id
         else:
             abort(
-                HTTPStatus.CONFLICT,
-                'OLT {} already exists.'.format(payload.get('id')))
+                HTTPStatus.CONFLICT, "OLT {} already exists.".format(payload.get("id"))
+            )
     return data
 
 
@@ -48,17 +48,17 @@ def get_olts_id(olt_id) -> dict:
     return found
 
 
-@blueprint_olts.route('/<int:olt_id>', methods=['GET'])
+@blueprint_olts.route("/<int:olt_id>", methods=["GET"])
 @check_api_key
 def index_olts_id(olt_id):
-    if request.method == 'GET':
+    if request.method == "GET":
         return get_olts_id(olt_id)
 
 
-@blueprint_olts.route('/', methods=['GET', 'POST'])
+@blueprint_olts.route("/", methods=["GET", "POST"])
 @check_api_key
 def index():
-    if request.method == 'GET':
+    if request.method == "GET":
         return jsonify(get_olts())
     else:
         return str(create())
