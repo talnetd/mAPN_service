@@ -100,14 +100,10 @@ def get_connection(*args, **kwargs):
             "Invalid option: {option_name}".format(option_name=for_database)
         )
 
-    print(f"DEBUG: {for_database}")
-    print(select_config_variable(for_database))
     kwargs.update(select_config_variable(for_database))
     if "cursorclass" not in kwargs:
         kwargs["cursorclass"] = pymysql.cursors.DictCursor
 
-    print(args)
-    print(kwargs)
     connection = pymysql.connect(*args, **kwargs)
     try:
         yield connection
