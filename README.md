@@ -4,6 +4,9 @@ This API service will provide a facility for frontend BMS to call when they want
 ## TOPOLOGY
 ![BMS TOPOLOGY](assets/topology.png?raw=true "BMS TOPOLOGY")
 
+## FLOWCHARTS
+![CRM-TO-BMS-TO-RADIUS](assets/flow_chart_crm2bms2radius.png?raw=true "BMS FLOWCHART")
+
 ## Getting Started
 
 To get started developing/testing this software service, you may need the
