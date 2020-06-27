@@ -686,6 +686,8 @@ components:
     Board:
       title: Board
       type: object
+      x-tags:
+        - Device
       properties:
         id:
           type: integer
@@ -693,8 +695,8 @@ components:
           type: string
         port_count:
           type: integer
-      x-tags:
-        - Device
+        geo_data:
+          type: string
     Location:
       title: Location
       type: object

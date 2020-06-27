@@ -1,6 +1,8 @@
 # mAPNservice
 This API service will provide a facility for frontend BMS to call when they want to talk to network devices such as routers and OLT panels.
 
+## TOPOLOGY
+![BMS TOPOLOGY](assets/topology.png?raw=true "BMS TOPOLOGY")
 
 ## Getting Started
 
