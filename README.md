@@ -3,9 +3,11 @@ This API service will provide a facility for frontend BMS to call when they want
 
 ## TOPOLOGY
 ![BMS TOPOLOGY](assets/topology.png?raw=true "BMS TOPOLOGY")
+*Overall architecture of the stack*
 
 ## FLOWCHARTS
 ![CRM-TO-BMS-TO-RADIUS](assets/flow_chart_crm2bms2radius.png?raw=true "BMS FLOWCHART")
+*Flowchart to describe how we build resources starting from location to radius packages*
 
 ## Getting Started
 
