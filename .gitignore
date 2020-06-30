@@ -146,3 +146,5 @@ dmypy.json
 # ignore vim swap files
 *.swp
 .DS_store
+Pipfile*
+
