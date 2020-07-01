@@ -10,7 +10,7 @@ blueprint_ppp_csid = Blueprint("ppp_csid", __name__)
 def create() -> int:
     data = -1
     payload = request.get_json()
-    required_fields = ["param1", "param2"]
+    required_fields = ["ppp_username", "ppp_password"]
     for k in required_fields:
         if k not in payload:
             abort(HTTPStatus.BAD_REQUEST, f"{k} is required.")
