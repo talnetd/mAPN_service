@@ -26,4 +26,4 @@ def register_routes(app):
     app.register_blueprint(blueprint_microtik, url_prefix="/microtik")
     app.register_blueprint(blueprint_VTP, url_prefix="/voip_traffic_plan")
     app.register_blueprint(blueprint_ppp_csid, url_prefix="/ppp_csid")
-    app.register_blueprint(blueprint_ppp_csid, url_prefix="/ppp_rsid")
+    app.register_blueprint(blueprint_ppp_rsid, url_prefix="/ppp_rsid")
