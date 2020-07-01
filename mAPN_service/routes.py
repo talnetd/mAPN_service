@@ -10,6 +10,7 @@ from mAPN_service.apis.network_olts import blueprint_olts
 from mAPN_service.apis.network_routers import blueprint_routers
 from mAPN_service.apis.partners import blueprint_partners
 from mAPN_service.apis.voip_traffic_plan import blueprint_VTP
+from mAPN_service.apis.ppp_csid import blueprint_ppp_csid
 
 
 def register_routes(app):
@@ -24,3 +25,4 @@ def register_routes(app):
     app.register_blueprint(blueprint_routers, url_prefix="/routers")
     app.register_blueprint(blueprint_microtik, url_prefix="/microtik")
     app.register_blueprint(blueprint_VTP, url_prefix="/voip_traffic_plan")
+    app.register_blueprint(blueprint_ppp_csid, url_prefix="/ppp_csid")
