@@ -11,6 +11,7 @@ from mAPN_service.apis.network_routers import blueprint_routers
 from mAPN_service.apis.partners import blueprint_partners
 from mAPN_service.apis.voip_traffic_plan import blueprint_VTP
 from mAPN_service.apis.ppp_csid import blueprint_ppp_csid
+from mAPN_service.apis.ppp_rsid import blueprint_ppp_rsid
 
 
 def register_routes(app):
