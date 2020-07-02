@@ -1,6 +1,5 @@
 import sqlalchemy as sa
 from datetime import datetime
-from sqlalchemy.schema import FetchedValue
 from mAPN_service.models import Base
 
 

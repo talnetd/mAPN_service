@@ -14,6 +14,14 @@ from mAPN_service.models.partner import Partner
 from mAPN_service.models.internet_traffic_plan import InternetTrafficPlan
 from mAPN_service.models.voip_traffic_plan import VoipTrafficPlan
 from mAPN_service.models.custom_traffic_plan import CustomTrafficPlan
+from mAPN_service.models.radius.nas import NAS
+from mAPN_service.models.radius.radacct import RadAcct
+from mAPN_service.models.radius.radcheck import RadCheck
+from mAPN_service.models.radius.radgroupcheck import RadGroupCheck
+from mAPN_service.models.radius.radgroupreply import RadGroupReply
+from mAPN_service.models.radius.radreply import RadReply
+from mAPN_service.models.radius.radusergroup import RadUserGroup
+
 
 GLOBAL_MYSQL_DB_ENCODING = "utf8mb4"
 MYSQL_APP_DB_HOST = os.environ.get("MYSQL_APP_DB_HOST") or os.environ.get(
@@ -58,6 +66,8 @@ if str(os.environ.get("TESTING")).lower() == "true":
 
 make_versioned(user_cls=None)
 engine = create_engine(MYSQL_APP_DB_URI)
+radius_engine = create_engine(MYSQL_RADIUS_DB_URI)
+
 tables = [
     Boards.__table__,
     Customer.__table__,
@@ -73,11 +83,24 @@ Base.metadata.create_all(engine, tables=tables)
 Session = sessionmaker(bind=engine)
 
 
+radius_tables = [
+    NAS.__table__,
+    RadAcct.__table__,
+    RadCheck.__table__,
+    RadGroupCheck.__table__,
+    RadGroupReply.__table__,
+    RadReply.__table__,
+    RadUserGroup.__table__,
+]
+Base.metadata.create_all(radius_engine, tables=radius_tables)
+Radius_Session = sessionmaker(bind=radius_engine)
+
+
 sqlalchemy.orm.configure_mappers()
 
 
 @contextmanager
-def session_scope():
+def session_scope(for_db="app"):
     """
     Create a new Database Session (using SQLAlchemy) which is generated from sessionmaker factory.
     NOTE: This depends on SQLAlchemy models.
@@ -113,10 +136,18 @@ def session_scope():
     # select records by batch (Not supported right now!)
     N/A
 
+    Arguments:
+        for_db {str} -- Select db connection string.
+                        (Default: "app", Possible values: "app", "radius")
+
     Yield:
         {Session} A Session object.
     """
-    session = Session()
+    session = None
+    if for_db == "radius":
+        session = Radius_Session()
+    else:
+        session = Session()
 
     try:
         yield session
