@@ -5,15 +5,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy_continuum import make_versioned
 from mAPN_service.models import Base
-from mAPN_service.models.boards import Boards
-from mAPN_service.models.customer import Customer
-from mAPN_service.models.location import Location
-from mAPN_service.models.network_olt import Network_Olt
-from mAPN_service.models.network_router import Network_Router
-from mAPN_service.models.partner import Partner
-from mAPN_service.models.internet_traffic_plan import InternetTrafficPlan
-from mAPN_service.models.voip_traffic_plan import VoipTrafficPlan
-from mAPN_service.models.custom_traffic_plan import CustomTrafficPlan
 from mAPN_service.models.radius.nas import NAS
 from mAPN_service.models.radius.radacct import RadAcct
 from mAPN_service.models.radius.radcheck import RadCheck
@@ -24,26 +15,10 @@ from mAPN_service.models.radius.radusergroup import RadUserGroup
 
 
 GLOBAL_MYSQL_DB_ENCODING = "utf8mb4"
-MYSQL_APP_DB_HOST = os.environ.get("MYSQL_APP_DB_HOST") or os.environ.get(
-    "DB_HOST", "localhost"
-)
-MYSQL_APP_DB_PORT = int(
-    os.environ.get("MYSQL_APP_DB_PORT") or os.environ.get("DB_PORT", 3306)
-)
-MYSQL_APP_DB_USER = os.environ.get("MYSQL_APP_DB_USER") or os.environ.get("DB_USER")
-MYSQL_APP_DB_PASSWORD = os.environ.get("MYSQL_APP_DB_PASSWORD") or os.environ.get(
-    "DB_PASSWORD"
-)
-MYSQL_APP_DB_NAME = os.environ.get("MYSQL_APP_DB_NAME") or os.environ.get("DB_NAME")
-MYSQL_APP_DB_ENCODING = (
-    os.environ.get("MYSQL_APP_DB_ENCODING") or GLOBAL_MYSQL_DB_ENCODING
-)
-MYSQL_APP_DB_URI = (
-    f"mysql+pymysql://{MYSQL_APP_DB_USER}:{MYSQL_APP_DB_PASSWORD}@{MYSQL_APP_DB_HOST}:"
-    f"{MYSQL_APP_DB_PORT}/{MYSQL_APP_DB_NAME}"
-)
 APP_API_KEY = os.environ.get("API_KEY") or os.environ.get("APP_API_KEY")
-
+MYSQL_RADIUS_DB_ENCODING = (
+    os.environ.get("MYSQL_RADIUS_DB_ENCODING") or GLOBAL_MYSQL_DB_ENCODING
+)
 
 MYSQL_RADIUS_DB_HOST = os.environ.get("MYSQL_RADIUS_DB_HOST", "localhost")
 MYSQL_RADIUS_DB_PORT = int(os.environ.get("MYSQL_RADIUS_DB_PORT", 3306))
@@ -59,29 +34,11 @@ MYSQL_RADIUS_DB_URI = (
     f"{MYSQL_RADIUS_DB_PORT}/{MYSQL_RADIUS_DB_NAME}"
 )
 
-
 if str(os.environ.get("TESTING")).lower() == "true":
-    MYSQL_APP_DB_URI = "sqlite://"
-
+    MYSQL_RADIUS_DB_URI = "sqlite://"
 
 make_versioned(user_cls=None)
-engine = create_engine(MYSQL_APP_DB_URI)
 radius_engine = create_engine(MYSQL_RADIUS_DB_URI)
-
-tables = [
-    Boards.__table__,
-    Customer.__table__,
-    Location.__table__,
-    Network_Olt.__table__,
-    Network_Router.__table__,
-    Partner.__table__,
-    InternetTrafficPlan.__table__,
-    VoipTrafficPlan.__table__,
-    CustomTrafficPlan.__table__,
-]
-Base.metadata.create_all(engine, tables=tables)
-Session = sessionmaker(bind=engine)
-
 
 radius_tables = [
     NAS.__table__,
@@ -146,8 +103,6 @@ def session_scope(for_db="app"):
     session = None
     if for_db == "radius":
         session = Radius_Session()
-    else:
-        session = Session()
 
     try:
         yield session
