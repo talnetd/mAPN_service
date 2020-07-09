@@ -103,7 +103,10 @@ def session_scope(for_db="app"):
     session = None
     if for_db == "radius":
         session = Radius_Session()
+    else:
+        session = Radius_Session()
 
+    # NOW ONLY RADIUS is import
     try:
         yield session
         session.commit()
