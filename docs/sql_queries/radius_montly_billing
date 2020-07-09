@@ -1,0 +1,30 @@
+CREATE TABLE IF NOT EXISTS `data_month` (
+  `calledstationid` VARCHAR(50),
+  `in_octets`  BIGINT(20) DEFAULT 0,
+  `out_octets` BIGINT(20) DEFAULT 0,
+  `year`       INT(4),
+  `month`      INT(2),
+  `last_update` DATETIME,
+  PRIMARY KEY (`calledstationid`, `year`, `month`)
+) ENGINE MyISAM;
+
+CREATE TRIGGER `monthDataStatistics` BEFORE UPDATE ON `radacct` FOR EACH ROW
+  INSERT INTO data_month (
+    `calledstationid`,
+    `in_octets`,
+    `out_octets`,
+    `year`,
+    `month`,
+    `last_update`)
+  VALUES (
+    old.calledstationid,
+    new.acctinputoctets - old.acctinputoctets,
+    new.acctoutputoctets - old.acctoutputoctets,
+    YEAR(CURDATE()),
+    MONTH(CURDATE()),
+    CURRENT_TIMESTAMP()
+  )
+  ON DUPLICATE KEY UPDATE
+    `in_octets` = (`in_octets` + (new.acctinputoctets - old.acctinputoctets)),
+    `out_octets` = (`out_octets` + (new.acctoutputoctets - old.acctoutputoctets)),
+    `last_update` = CURRENT_TIMESTAMP();

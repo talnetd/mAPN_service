@@ -1,0 +1,8 @@
+curl --location --request POST 'http://172.20.1.22/pppoe/user_groups/bind' \
+--header 'Authorization: Bearer 2a8a6039c3826d515dca14a813a6f2956638e5b58fe2132d71f100a7a4204c1636443fb477ea1f1307ec2320940d5444b089317386c3b3a7cc336d07e8761fa6' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "ppp_username": "YGN_100102211",
+    "ppp_groupname": "thisgroup",
+    "ppp_priority": 1
+}'

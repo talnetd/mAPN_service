@@ -1,0 +1,22 @@
+[Unit]
+Description=Gunicorn instance to serve myproject
+After=network.target
+
+
+
+[Service]
+User=talnet
+Group=www-data
+WorkingDirectory=/home/talnet/mAPN_service
+Environment="PATH=/home/talnet/mAPN_service/venv/bin"
+ExecStart=/home/talnet/mAPN_service/venv/bin/gunicorn \
+          --workers 3 \
+          --bind unix:mapnservice.sock \
+          -m 007 wsgi:app \
+          --access-logfile /var/log/gunicorn/access.log \
+          --error-logfile /var/log/gunicorn/error.log \
+          --log-level DEBUG
+
+
+[Install]
+WantedBy=multi-user.target
