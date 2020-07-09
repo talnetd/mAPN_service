@@ -6,6 +6,7 @@ from mAPN_service.modules.auth import check_api_key
 
 blueprint_ppp_rsid = Blueprint("ppp_rsid", __name__)
 
+
 def create() -> int:
     data = -1
     payload = request.get_json()

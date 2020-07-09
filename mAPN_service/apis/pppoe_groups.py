@@ -11,15 +11,14 @@ from mAPN_service.modules.auth import check_api_key
 
 
 blueprint_pppoe_user_groups = Blueprint("pppoe_user_groups", __name__)
-radius_rate_limi_op = os.environ.get(
-    'RADIUS_MIKROTIK_RATE_LIMIT_OP',
-    'Rate-Limit')
+radius_rate_limi_op = os.environ.get("RADIUS_MIKROTIK_RATE_LIMIT_OP", "Rate-Limit")
+
 
 def get_all_rgr_replies():
     replies = list()
     with session_scope() as db:
         found = db.query(Rgr).all()
-        replies = [row2dict(row) for row in found ]
+        replies = [row2dict(row) for row in found]
     return replies
 
 
@@ -39,15 +38,21 @@ def update_rate_limit():
         if k not in payload:
             abort(HTTPStatus.BAD_REQUEST, f"{k} is required.")
     with session_scope() as db:
-        found = db.query(Rgr).filter_by(groupname=payload.get("ppp_groupname"),
-                                        attribute=radius_rate_limi_op).first()
+        found = (
+            db.query(Rgr)
+            .filter_by(
+                groupname=payload.get("ppp_groupname"), attribute=radius_rate_limi_op
+            )
+            .first()
+        )
         if not found:
-            rgr = Rgr(id=None,
-                        groupname=payload.get("ppp_groupname"),
-                        attribute=radius_rate_limi_op,
-                        op="==",
-                        value=payload.get("group_rate_limit")
-                        )
+            rgr = Rgr(
+                id=None,
+                groupname=payload.get("ppp_groupname"),
+                attribute=radius_rate_limi_op,
+                op="==",
+                value=payload.get("group_rate_limit"),
+            )
             db.add(rgr)
             db.flush()
             db.refresh(rgr)
@@ -63,18 +68,25 @@ def update_rate_limit():
 def bind_ppp_group():
     data = -1
     payload = request.get_json()
-    required_fields = ["ppp_username", "ppp_groupname","ppp_priority"]
+    required_fields = ["ppp_username", "ppp_groupname", "ppp_priority"]
     for k in required_fields:
         if k not in payload:
             abort(HTTPStatus.BAD_REQUEST, f"{k} is required.")
 
     with session_scope() as db:
-        found = db.query(Rug).filter_by(username=payload.get("ppp_username"),
-                                        groupname=payload.get("ppp_groupname")).first()
+        found = (
+            db.query(Rug)
+            .filter_by(
+                username=payload.get("ppp_username"),
+                groupname=payload.get("ppp_groupname"),
+            )
+            .first()
+        )
         if not found:
-            rug = Rug(username=payload.get("ppp_username"),
-                        groupname=payload.get("ppp_groupname"),
-                        priority=payload.get("ppp_priority")
+            rug = Rug(
+                username=payload.get("ppp_username"),
+                groupname=payload.get("ppp_groupname"),
+                priority=payload.get("ppp_priority"),
             )
             db.add(rug)
             db.flush()
@@ -85,7 +97,7 @@ def bind_ppp_group():
                 HTTPStatus.CONFLICT,
                 "Group {} already binded to user.".format(payload.get("ppp_username")),
             )
-    return data   
+    return data
 
 
 def create() -> int:
@@ -99,12 +111,13 @@ def create() -> int:
     with session_scope() as db:
         found = db.query(Rgr).filter_by(groupname=payload.get("groupname")).first()
         if not found:
-            rgr = Rgr(id=None,
-                        groupname=payload.get("groupname"),
-                        attribute=radius_rate_limi_op,
-                        op="==",
-                        value=payload.get("group_rate_limit")
-                    )
+            rgr = Rgr(
+                id=None,
+                groupname=payload.get("groupname"),
+                attribute=radius_rate_limi_op,
+                op="==",
+                value=payload.get("group_rate_limit"),
+            )
             db.add(rgr)
             db.flush()
             db.refresh(rgr)
@@ -123,17 +136,20 @@ def update_rate_limit_route():
     if request.method == "POST":
         return jsonify(update_rate_limit())
 
+
 @blueprint_pppoe_user_groups.route("/<ppp_groupname>", methods=["GET"])
 @check_api_key
 def get_group(ppp_groupname):
     if request.method == "GET":
         return jsonify(get_rgr_by_group_name(ppp_groupname))
 
+
 @blueprint_pppoe_user_groups.route("/bind", methods=["POST"])
 @check_api_key
 def bind_group():
     if request.method == "POST":
         return jsonify(bind_ppp_group())
+
 
 @blueprint_pppoe_user_groups.route("/", methods=["GET", "POST"])
 @check_api_key

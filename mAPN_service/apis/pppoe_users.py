@@ -9,16 +9,17 @@ from mAPN_service.modules.auth import check_api_key
 
 blueprint_pppoe_users = Blueprint("pppoe_users", __name__)
 radius_radcheck_password_attr = os.environ.get(
-    'RADIUS_USERNAME_PASSWORD_OP',
-    'ClearText-Password')
+    "RADIUS_USERNAME_PASSWORD_OP", "ClearText-Password"
+)
+
 
 def get_all_pppoe_checks():
     checks = list()
     with session_scope() as db:
         found = db.query(RadCheck).all()
-        checks = [row2dict(row) for row in found ]
-     # return all raw checks
-    return checks              
+        checks = [row2dict(row) for row in found]
+    # return all raw checks
+    return checks
 
 
 def get_checks_by_username(pppoe_username):
@@ -27,6 +28,7 @@ def get_checks_by_username(pppoe_username):
         found = db.query(RadCheck).filter_by(username=pppoe_username).all()
         checks = [row2dict(row) for row in found]
     return checks
+
 
 def create() -> int:
     data = -1
@@ -37,16 +39,22 @@ def create() -> int:
             abort(HTTPStatus.BAD_REQUEST, f"{k} is required.")
 
     with session_scope() as db:
-        found = db.query(RadCheck).filter_by(
-            username=payload.get("ppp_username"),
-            attribute=radius_radcheck_password_attr).first()
+        found = (
+            db.query(RadCheck)
+            .filter_by(
+                username=payload.get("ppp_username"),
+                attribute=radius_radcheck_password_attr,
+            )
+            .first()
+        )
         if not found:
-            radcheck = RadCheck(id=None, 
-                                username=payload.get('ppp_username'),
-                                attribute=radius_radcheck_password_attr,
-                                op=":=",
-                                value=payload.get("ppp_password")
-                            )
+            radcheck = RadCheck(
+                id=None,
+                username=payload.get("ppp_username"),
+                attribute=radius_radcheck_password_attr,
+                op=":=",
+                value=payload.get("ppp_password"),
+            )
             db.add(radcheck)
             db.flush()
             db.refresh(radcheck)
@@ -64,7 +72,7 @@ def create() -> int:
 def get_check(pppoe_username):
     if request.method == "GET":
         return jsonify(get_checks_by_username(pppoe_username))
-        
+
 
 @blueprint_pppoe_users.route("/", methods=["GET", "POST"])
 @check_api_key
@@ -72,4 +80,4 @@ def index():
     if request.method == "GET":
         return jsonify(get_all_pppoe_checks())
     else:
-            return str(create())
+        return str(create())
