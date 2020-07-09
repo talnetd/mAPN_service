@@ -1,11 +1,11 @@
 import os
 from http import HTTPStatus
-from flask import Blueprint, request, jsonify, abort
+
+from flask import Blueprint, abort, jsonify, request
 from mAPN_service.config import session_scope
 from mAPN_service.models.radius.radcheck import RadCheck
 from mAPN_service.modules import row2dict
 from mAPN_service.modules.auth import check_api_key
-
 
 blueprint_pppoe_users = Blueprint("pppoe_users", __name__)
 radius_radcheck_password_attr = os.environ.get(
@@ -15,7 +15,7 @@ radius_radcheck_password_attr = os.environ.get(
 
 def get_all_pppoe_checks():
     checks = list()
-    with session_scope() as db:
+    with session_scope("radius") as db:
         found = db.query(RadCheck).all()
         checks = [row2dict(row) for row in found]
     # return all raw checks
@@ -24,7 +24,7 @@ def get_all_pppoe_checks():
 
 def get_checks_by_username(pppoe_username):
     checks = list()
-    with session_scope() as db:
+    with session_scope("radius") as db:
         found = db.query(RadCheck).filter_by(username=pppoe_username).all()
         checks = [row2dict(row) for row in found]
     return checks
@@ -38,7 +38,7 @@ def create() -> int:
         if k not in payload:
             abort(HTTPStatus.BAD_REQUEST, f"{k} is required.")
 
-    with session_scope() as db:
+    with session_scope("radius") as db:
         found = (
             db.query(RadCheck)
             .filter_by(
