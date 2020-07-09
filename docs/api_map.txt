@@ -1,0 +1,10 @@
+Endpoint                                   Methods    Rule
+-----------------------------------------  ---------  ------------------------------------
+index.index                                GET        /
+pppoe_user_groups.bind_group               POST       /pppoe/user_groups/bind
+pppoe_user_groups.get_group                GET        /pppoe/user_groups/<ppp_groupname>
+pppoe_user_groups.index                    GET, POST  /pppoe/user_groups/
+pppoe_user_groups.update_rate_limit_route  POST       /pppoe/user_groups/update_rate_limit
+pppoe_users.get_check                      GET        /pppoe/users/<pppoe_username>
+pppoe_users.index                          GET, POST  /pppoe/users/
+static                                     GET        /static/<path:filename>
