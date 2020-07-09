@@ -1,0 +1,1 @@
+INSERT INTO radius.radgroupreply (groupname, attribute, op, value) VALUES ('talnet', 'Service-Type', ':=', 'Framed-User'), ('talnet', 'Framed-Protocol', ':=', 'PPP'), ('talnet', 'Framed-Compression', ':=', 'Van-Jacobsen-TCP-IP');

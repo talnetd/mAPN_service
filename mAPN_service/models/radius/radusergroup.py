@@ -7,15 +7,13 @@ class RadUserGroup(Base):
     __versioned__ = {}
     __tablename__ = "radusergroup"
 
-    id = sa.Column(sa.Integer, primary_key=True, autoincrement=True)
-    username = sa.Column(sa.String(64), nullable=False, default="")
+    username = sa.Column(sa.String(64), primary_key=True, nullable=False, default="")
     groupname = sa.Column(sa.String(64), nullable=False, default="")
     priority = sa.Column(sa.Integer, nullable=False, default="1")
 
     def __init__(
-        self, id=None, username=None, groupname=None, priority=None,
+        self, username=None, groupname=None, priority=None,
     ):
-        self.id = id
         self.username = username
         self.groupname = groupname
         self.priority = priority

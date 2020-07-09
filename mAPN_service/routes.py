@@ -12,6 +12,8 @@ from mAPN_service.apis.partners import blueprint_partners
 from mAPN_service.apis.voip_traffic_plan import blueprint_VTP
 from mAPN_service.apis.ppp_csid import blueprint_ppp_csid
 from mAPN_service.apis.ppp_rsid import blueprint_ppp_rsid
+from mAPN_service.apis.pppoe_users import blueprint_pppoe_users
+from mAPN_service.apis.pppoe_groups import blueprint_pppoe_user_groups
 
 
 def register_routes(app):
@@ -28,3 +30,5 @@ def register_routes(app):
     app.register_blueprint(blueprint_VTP, url_prefix="/voip_traffic_plan")
     app.register_blueprint(blueprint_ppp_csid, url_prefix="/ppp_csid")
     app.register_blueprint(blueprint_ppp_rsid, url_prefix="/ppp_rsid")
+    app.register_blueprint(blueprint_pppoe_users, url_prefix="/pppoe/users")
+    app.register_blueprint(blueprint_pppoe_user_groups, url_prefix="/pppoe/user_groups")
