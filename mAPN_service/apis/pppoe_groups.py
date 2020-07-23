@@ -9,9 +9,7 @@ from mAPN_service.modules import row2dict
 from mAPN_service.modules.auth import check_api_key
 
 blueprint_pppoe_user_groups = Blueprint("pppoe_user_groups", __name__)
-radius_rate_limi_op = os.environ.get(
-    "RADIUS_MIKROTIK_RATE_LIMIT_OP", "Rate-Limit"
-)
+radius_rate_limi_op = os.environ.get("RADIUS_MIKROTIK_RATE_LIMIT_OP", "Rate-Limit")
 
 
 def get_all_rgr_replies():
@@ -30,7 +28,7 @@ def get_rgr_by_group_name(ppp_groupname):
     return replies
 
 
-def update_rate_limit():
+def create_rate_limit():
     data = -1
     payload = request.get_json()
     required_fields = ["ppp_groupname", "group_rate_limit"]
@@ -41,8 +39,7 @@ def update_rate_limit():
         found = (
             db.query(Rgr)
             .filter_by(
-                groupname=payload.get("ppp_groupname"),
-                attribute=radius_rate_limi_op,
+                groupname=payload.get("ppp_groupname"), attribute=radius_rate_limi_op,
             )
             .first()
         )
@@ -61,7 +58,30 @@ def update_rate_limit():
         else:
             abort(
                 HTTPStatus.CONFLICT,
-                "Group {} already binded to user.".format(
+                "Group {} already binded to user.".format(payload.get("ppp_username")),
+            )
+    return data
+
+
+def update_rate_limit():
+    data = None
+    payload = request.get_json()
+    required_fields = ["ppp_groupname", "group_rate_limit"]
+    for k in required_fields:
+        if k not in payload:
+            abort(HTTPStatus.BAD_REQUEST, f"{k} is required.")
+    with session_scope("radius") as db:
+        found = db.query(Rgr).filter_by(groupname=payload.get("ppp_groupname"),).first()
+        if found:
+            found.attribute = radius_rate_limi_op
+            found.op = "=="
+            found.value = payload.get("group_rate_limit")
+            db.add(found)
+            data = found.id
+        else:
+            abort(
+                HTTPStatus.NOT_FOUND,
+                "Group {} not found to update rate limit.".format(
                     payload.get("ppp_username")
                 ),
             )
@@ -98,8 +118,65 @@ def bind_ppp_group():
         else:
             abort(
                 HTTPStatus.CONFLICT,
-                "Group {} already binded to user.".format(
-                    payload.get("ppp_username")
+                "Group {} already binded to user.".format(payload.get("ppp_username")),
+            )
+    return data
+
+
+def unbind_ppp_group():
+    data = -1
+    payload = request.get_json()
+    required_fields = ["ppp_username", "ppp_groupname"]
+    for k in required_fields:
+        if k not in payload:
+            abort(HTTPStatus.BAD_REQUEST, f"{k} is required.")
+    with session_scope("radius") as db:
+        found = (
+            db.query(Rug)
+            .filter_by(
+                username=payload.get("ppp_username"),
+                groupname=payload.get("ppp_groupname"),
+            )
+            .first()
+        )
+        if found:
+            db.delete(found)
+        else:
+            abort(
+                HTTPStatus.NOT_FOUND,
+                "Group information not found with {} and {}.".format(
+                    payload.get("ppp_username"), payload.get("ppp_groupname")
+                ),
+            )
+    return data
+
+
+def update_ppp_group():
+    data = None
+    payload = request.get_json()
+    required_fields = ["ppp_username", "ppp_groupname", "new_groupname"]
+    for k in required_fields:
+        if k not in payload:
+            abort(HTTPStatus.BAD_REQUEST, f"{k} is required.")
+
+    with session_scope("radius") as db:
+        found = (
+            db.query(Rug)
+            .filter_by(
+                username=payload.get("ppp_username"),
+                groupname=payload.get("ppp_groupname"),
+            )
+            .first()
+        )
+        if found:
+            found.groupname = payload.get("new_groupname")
+            db.add(found)
+            data = found.username
+        else:
+            abort(
+                HTTPStatus.NOT_FOUND,
+                "No plan information with {} and {} not found.".format(
+                    payload.get("ppp_username"), payload.get("ppp_groupname")
                 ),
             )
     return data
@@ -114,9 +191,7 @@ def create() -> int:
             abort(HTTPStatus.BAD_REQUEST, f"{k} is required.")
 
     with session_scope("radius") as db:
-        found = (
-            db.query(Rgr).filter_by(groupname=payload.get("groupname")).first()
-        )
+        found = db.query(Rgr).filter_by(groupname=payload.get("groupname")).first()
         if not found:
             rgr = Rgr(
                 id=None,
@@ -137,10 +212,12 @@ def create() -> int:
     return data
 
 
-@blueprint_pppoe_user_groups.route("/update_rate_limit", methods=["POST"])
+@blueprint_pppoe_user_groups.route("/update_rate_limit", methods=["POST", "PUT"])
 @check_api_key
 def update_rate_limit_route():
     if request.method == "POST":
+        return jsonify(create_rate_limit())
+    elif request.method == "PUT":
         return jsonify(update_rate_limit())
 
 
@@ -151,11 +228,15 @@ def get_group(ppp_groupname):
         return jsonify(get_rgr_by_group_name(ppp_groupname))
 
 
-@blueprint_pppoe_user_groups.route("/bind", methods=["POST"])
+@blueprint_pppoe_user_groups.route("/bind", methods=["POST", "PUT", "DELETE"])
 @check_api_key
 def bind_group():
     if request.method == "POST":
         return jsonify(bind_ppp_group())
+    elif request.method == "PUT":
+        return jsonify(update_ppp_group())
+    elif request.method == "DELETE":
+        return jsonify(unbind_ppp_group())
 
 
 @blueprint_pppoe_user_groups.route("/", methods=["GET", "POST"])
