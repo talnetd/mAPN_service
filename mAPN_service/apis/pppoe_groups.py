@@ -197,7 +197,7 @@ def create() -> int:
                 id=None,
                 groupname=payload.get("groupname"),
                 attribute=radius_rate_limi_op,
-                op="==",
+                op=":=",
                 value=payload.get("group_rate_limit"),
             )
             db.add(rgr)
