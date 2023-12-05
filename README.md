@@ -46,7 +46,7 @@ simply chmod +x the script if we haven't done so yet.
 * MIKROTIK: 192.168.100.114
 * RADIUS: 192.168.100.120
 * NASUSER: radius
-* NAS_SECRET: nerdb0rn
+* NAS_SECRET: ******
 
 Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
